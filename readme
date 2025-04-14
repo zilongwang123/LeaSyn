@@ -1,28 +1,16 @@
-To replay the experiment, you need to 
-    1. compile the addmodule pass in the secretyosys by just running "make", and move "addmodule.so" to the folder "hwcontracts/code/verification/addobsmodule.so"
-    2. change the yosys path in the configuration file to the secretyosys folder.
-    3. run "python3  cli.py configfile"
+## Compile the Yosys passes
 
-The configuration I have already test is: 
-    config/countdown-2way.yaml
-    config/pipeline_mul-2way.yaml
+LeaVe relies on three Yosys custom passes to prepare the processor design for verification. These passes need to be compiled before using LeaVe. Run `make -C yosys-passes` or follow the instructions in folder `yosys-passes` for more detailed instructions.
 
+## Reproducing the results from the paper
 
-* benchmarks folder:
-    Contains the verilog code of design and also a template "prod.v"
+For each target, the instructions below describe how to synthesis a precise and sound contract.
 
-* config
-    Contains the configuration files which contain the input/output information, frontend/backend information, and also information about invariant, contracts and target.
+Below, `$TARGET` is one of  [`DarkRISCV-2`,`DarkRISCV-3`,`Sodor-2`,`ibex-small`,`ibex-mult-div`,`ibex-cache`]. To useSyn to synthesis a precise and sound contract for `$TARGET`, follow these steps:
 
-The work flow of the tool is like:
- 1. cope the benchmark to the output folder.
- 2. flatten the design.
- 3. create invariant modules, observation modules and state modules. 
- 4. add these modules to the main design.
- 5. create the product module withe the help of the template "prod.v".
- 6. set prod as the top module flatten the design, and translate it to a BMC problem in "prod.smt".
- 7. invoke the backend to solve the BMC problem.
- 8. if the checker returns failed, invoke the "iverilog" and "vvp" to analyse the counterexample.
+1. In the configuration file `config/$TARGET.yaml`, change the value of the `yosysPath` option to point to the Yosys's executable in your machine, e.g., `yosys-root-path/yosys`. Change the parameters accordingly, e.g., the BMC bound, the strategy for encoding property...
 
- The steps 2-4 are implement in "testOut/trg_yosys.script";
- The steps 5-6 are implement in "testOut/yosys_verification.script";
+2. Run LeaVe by executing `python3 cli.py config/$TARGET.yaml`.
+
+3. Inspect the results in the folder `testOut`. The output folder contains the information about the contract learn from each loop and the statistic information about the initial and final contract. The output file `logfile` contains the information about the invariants discovered in each iteration of the invariant synthesis loop. The output file `logtimefile` reports timing statistics about the verification process.
+
