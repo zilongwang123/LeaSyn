@@ -1,0 +1,919 @@
+# input/output information
+codeFolder: "benchmarks/DarkRISCV-2" # folder with Verilog sources
+outFolder: "testOut" # target folder for intermediate data
+prodCircuitTemplate: "prod.v"
+clockInput: 'XCLK'
+initRegister: 'init'
+cycleDelayed: "5" # greater than 1
+instrDelayed: "1"
+testcase: "4000"
+evaTCs: "128000"
+ctr_families: "BASE,ALIGNED,BRANCH,VALUE,DEPENDENCIES" #BASE,ALIGNED,BRANCH,VALUE,DEPENDENCIES
+propertyEncoding: "dynamic" #["static","dynamic"]
+
+processor: "DARKRISCV_2"
+threads: "64"
+evalFolder: "TestCases"
+rvfiModule: "\\core0"
+
+
+# main module under analysis
+module: "darksocv_2stages" 
+moduleFile: "darksocv_2stages.v"
+memoryList: ["RAM","ROM"]
+
+# Verilog frontend
+yosysPath: "../../../../yosys/yosys"
+yosysBMCPath: "yosys-smtbmc"
+BMCBound: "15" # should be greater than cycleDelayed/47
+prefixCheck: "True"
+yosysAdditionalModules: ["addobsmodule.so", "show_regs_mems.so", "stuttering.so"]
+
+# Output
+outputformat: "brief"
+
+
+# iVerilog
+iverilogPath: "iverilog"
+vvpPath: "vvp"
+
+# Analysis backend
+avrPath: "/mnt/c/Users/wzl08/Desktop/hwcontracts/avr/avr.py"
+
+
+### SOURCE
+srcObservations:
+######################
+# seq-arch
+######################
+  # ctr1
+  # - {id: "PC", cond: "1", attrs: [{value: "\\core0.PC_retire", width: 32}]}
+  # - {id: "INSTR", cond: "1", attrs: [ {value: "\\core0.INSTR_CTR", width: 32}]}
+  # ctr2
+  # - { id: "branch_taken_ctr", cond: " \\core0.rvfi_bne_ctr || \\core0.rvfi_bge_ctr || \\core0.rvfi_beq_ctr || \\core0.rvfi_blt_ctr || \\core0.rvfi_bltu_ctr || \\core0.rvfi_bgeu_ctr ", attrs: [ { value: " \\core0.branch_taken ", width: 1 } ]}
+  # - { id: "is_branch_ctr", cond: " \\core0.rvfi_jalr_ctr || \\core0.rvfi_jal_ctr ", attrs: [ { value: " \\core0.is_branch ", width: 1 } ]}
+  # ctr3
+  - { id: "branch_taken_ctr", cond: " \\core0.rvfi_bne_ctr || \\core0.rvfi_bge_ctr || \\core0.rvfi_beq_ctr || \\core0.rvfi_blt_ctr || \\core0.rvfi_bltu_ctr || \\core0.rvfi_bgeu_ctr || \\core0.rvfi_jalr_ctr || \\core0.rvfi_jal_ctr ", attrs: [ { value: " \\core0.branch_taken ", width: 1 } ]}
+
+
+candidateContractAtoms:
+# rvfi_valid and rvfi_order
+- {id: "add_rvfi_valid", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.rvfi_valid ", width: 1 }]}
+- {id: "add_rvfi_order", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.rvfi_order ", width: 64 }]}
+# data dependency
+- {id: "add_raw_rs1_1", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.raw_rs1_1 ", width: 1 }]}
+- {id: "add_raw_rs2_1", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.raw_rs2_1 ", width: 1 }]}
+- {id: "add_waw_1", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.waw_1 ", width: 1 }]}
+- {id: "add_raw_rs1_2", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.raw_rs1_2 ", width: 1 }]}
+- {id: "add_raw_rs2_2", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.raw_rs2_2 ", width: 1 }]}
+- {id: "add_waw_2", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.waw_2 ", width: 1 }]}
+- {id: "add_raw_rs1_3", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.raw_rs1_3 ", width: 1 }]}
+- {id: "add_raw_rs2_3", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.raw_rs2_3 ", width: 1 }]}
+- {id: "add_waw_3", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.waw_3 ", width: 1 }]}
+- {id: "add_raw_rs1_4", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.raw_rs1_4 ", width: 1 }]}
+- {id: "add_raw_rs2_4", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.raw_rs2_4 ", width: 1 }]}
+- {id: "add_waw_4", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.waw_4 ", width: 1 }]}
+####
+####
+- {id: "add_funct3", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "add_funct7", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "add_imm", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "add_opcode", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "add_rd", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "add_reg_rd", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "add_reg_rs1", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "add_reg_rs2", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "add_reg_rs1_zero", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "add_reg_rs2_zero", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "add_reg_rs1_log2", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "add_reg_rs2_log2", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "add_rs1", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "add_rs2", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "add_format", cond: "\\core0.rvfi_add_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "addi_funct3", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "addi_funct7", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "addi_opcode", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "addi_imm", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "addi_rd", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "addi_reg_rd", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "addi_reg_rs1", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "addi_rs1", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "addi_format", cond: "\\core0.rvfi_addi_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "and_funct3", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "and_funct7", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "and_imm", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "and_opcode", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "and_rd", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "and_reg_rd", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "and_reg_rs1", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "and_reg_rs2", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "and_reg_rs1_zero", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "and_reg_rs2_zero", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "and_reg_rs1_log2", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "and_reg_rs2_log2", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "and_rs1", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "and_rs2", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "and_format", cond: "\\core0.rvfi_and_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "andi_funct3", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "andi_funct7", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "andi_opcode", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "andi_imm", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "andi_rd", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "andi_reg_rd", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "andi_reg_rs1", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "andi_rs1", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "andi_format", cond: "\\core0.rvfi_andi_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "auipc_funct3", cond: "\\core0.rvfi_auipc_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "auipc_funct7", cond: "\\core0.rvfi_auipc_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "auipc_opcode", cond: "\\core0.rvfi_auipc_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "auipc_rd", cond: "\\core0.rvfi_auipc_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "auipc_reg_rd", cond: "\\core0.rvfi_auipc_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "auipc_format", cond: "\\core0.rvfi_auipc_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "beq_branch_taken", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.branch_taken ", width: 1 }]}
+- {id: "beq_funct3", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "beq_funct7", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "beq_imm", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "beq_is_branch", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.is_branch ", width: 1 }]}
+- {id: "beq_new_pc", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.new_pc ", width: 32 }]}
+- {id: "beq_opcode", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "beq_reg_rs1", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "beq_reg_rs2", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "beq_reg_rs1_zero", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "beq_reg_rs2_zero", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "beq_reg_rs1_log2", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "beq_reg_rs2_log2", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "beq_rs1", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "beq_rs2", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "beq_format", cond: "\\core0.rvfi_beq_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "bge_branch_taken", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.branch_taken ", width: 1 }]}
+- {id: "bge_funct3", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "bge_funct7", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "bge_imm", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "bge_is_branch", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.is_branch ", width: 1 }]}
+- {id: "bge_new_pc", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.new_pc ", width: 32 }]}
+- {id: "bge_opcode", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "bge_reg_rs1", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "bge_reg_rs2", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "bge_reg_rs1_zero", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "bge_reg_rs2_zero", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "bge_reg_rs1_log2", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "bge_reg_rs2_log2", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "bge_rs1", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "bge_rs2", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "bge_format", cond: "\\core0.rvfi_bge_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "bgeu_branch_taken", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.branch_taken ", width: 1 }]}
+- {id: "bgeu_funct3", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "bgeu_funct7", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "bgeu_imm", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "bgeu_is_branch", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.is_branch ", width: 1 }]}
+- {id: "bgeu_new_pc", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.new_pc ", width: 32 }]}
+- {id: "bgeu_opcode", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "bgeu_reg_rs1", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "bgeu_reg_rs2", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "bgeu_reg_rs1_zero", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "bgeu_reg_rs2_zero", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "bgeu_reg_rs1_log2", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "bgeu_reg_rs2_log2", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "bgeu_rs1", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "bgeu_rs2", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "bgeu_format", cond: "\\core0.rvfi_bgeu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "blt_branch_taken", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.branch_taken ", width: 1 }]}
+- {id: "blt_funct3", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "blt_funct7", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "blt_imm", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "blt_is_branch", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.is_branch ", width: 1 }]}
+- {id: "blt_new_pc", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.new_pc ", width: 32 }]}
+- {id: "blt_opcode", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "blt_reg_rs1", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "blt_reg_rs2", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "blt_reg_rs1_zero", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "blt_reg_rs2_zero", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "blt_reg_rs1_log2", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "blt_reg_rs2_log2", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "blt_rs1", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "blt_rs2", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "blt_format", cond: "\\core0.rvfi_blt_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "bltu_branch_taken", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.branch_taken ", width: 1 }]}
+- {id: "bltu_funct3", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "bltu_funct7", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "bltu_imm", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "bltu_is_branch", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.is_branch ", width: 1 }]}
+- {id: "bltu_new_pc", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.new_pc ", width: 32 }]}
+- {id: "bltu_opcode", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "bltu_reg_rs1", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "bltu_reg_rs2", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "bltu_reg_rs1_zero", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "bltu_reg_rs2_zero", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "bltu_reg_rs1_log2", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "bltu_reg_rs2_log2", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "bltu_rs1", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "bltu_rs2", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "bltu_format", cond: "\\core0.rvfi_bltu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "bne_branch_taken", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.branch_taken ", width: 1 }]}
+- {id: "bne_funct3", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "bne_funct7", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "bne_imm", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "bne_is_branch", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.is_branch ", width: 1 }]}
+- {id: "bne_new_pc", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.new_pc ", width: 32 }]}
+- {id: "bne_opcode", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "bne_reg_rs1", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "bne_reg_rs2", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "bne_reg_rs1_zero", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "bne_reg_rs2_zero", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "bne_reg_rs1_log2", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "bne_reg_rs2_log2", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "bne_rs1", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "bne_rs2", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "bne_format", cond: "\\core0.rvfi_bne_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "div_funct3", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "div_funct7", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "div_imm", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "div_opcode", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "div_rd", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "div_reg_rd", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "div_reg_rs1", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "div_reg_rs2", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "div_reg_rs1_zero", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "div_reg_rs2_zero", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "div_reg_rs1_log2", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "div_reg_rs2_log2", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "div_rs1", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "div_rs2", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "div_format", cond: "\\core0.rvfi_div_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "divu_funct3", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "divu_funct7", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "divu_imm", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "divu_opcode", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "divu_rd", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "divu_reg_rd", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "divu_reg_rs1", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "divu_reg_rs2", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "divu_reg_rs1_zero", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "divu_reg_rs2_zero", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "divu_reg_rs1_log2", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "divu_reg_rs2_log2", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "divu_rs1", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "divu_rs2", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "divu_format", cond: "\\core0.rvfi_divu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "jal_branch_taken", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.branch_taken ", width: 1 }]}
+- {id: "jal_funct3", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "jal_funct7", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "jal_is_branch", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.is_branch ", width: 1 }]}
+- {id: "jal_imm", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "jal_new_pc", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.new_pc ", width: 32 }]}
+- {id: "jal_opcode", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "jal_rd", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "jal_reg_rd", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "jal_format", cond: "\\core0.rvfi_jal_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "jalr_branch_taken", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.branch_taken ", width: 1 }]}
+- {id: "jalr_funct3", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "jalr_funct7", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "jalr_is_branch", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.is_branch ", width: 1 }]}
+- {id: "jalr_new_pc", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.new_pc ", width: 32 }]}
+- {id: "jalr_imm", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "jalr_opcode", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "jalr_rd", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "jalr_reg_rd", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "jalr_reg_rs1", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "jalr_rs1", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "jalr_format", cond: "\\core0.rvfi_jalr_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "lb_funct3", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "lb_funct7", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "lb_imm", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "lb_is_aligned", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.is_aligned ", width: 1 }]}
+- {id: "lb_is_half_aligned", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.is_half_aligned ", width: 1 }]}
+- {id: "lb_mem_addr", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.mem_addr ", width: 32 }]}
+- {id: "lb_mem_r_data", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.mem_r_data ", width: 32 }]}
+- {id: "lb_opcode", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "lb_rd", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "lb_reg_rd", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "lb_reg_rs1", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "lb_rs1", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "lb_format", cond: "\\core0.rvfi_lb_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "lbu_funct3", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "lbu_funct7", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "lbu_imm", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "lbu_is_aligned", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.is_aligned ", width: 1 }]}
+- {id: "lbu_is_half_aligned", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.is_half_aligned ", width: 1 }]}
+- {id: "lbu_mem_addr", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.mem_addr ", width: 32 }]}
+- {id: "lbu_mem_r_data", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.mem_r_data ", width: 32 }]}
+- {id: "lbu_opcode", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "lbu_rd", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "lbu_reg_rd", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "lbu_reg_rs1", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "lbu_rs1", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "lbu_format", cond: "\\core0.rvfi_lbu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "lh_funct3", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "lh_funct7", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "lh_imm", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "lh_is_aligned", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.is_aligned ", width: 1 }]}
+- {id: "lh_is_half_aligned", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.is_half_aligned ", width: 1 }]}
+- {id: "lh_mem_addr", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.mem_addr ", width: 32 }]}
+- {id: "lh_mem_r_data", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.mem_r_data ", width: 32 }]}
+- {id: "lh_opcode", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "lh_rd", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "lh_reg_rd", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "lh_reg_rs1", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "lh_rs1", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "lh_format", cond: "\\core0.rvfi_lh_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "lhu_funct3", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "lhu_funct7", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "lhu_imm", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "lhu_is_aligned", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.is_aligned ", width: 1 }]}
+- {id: "lhu_is_half_aligned", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.is_half_aligned ", width: 1 }]}
+- {id: "lhu_mem_addr", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.mem_addr ", width: 32 }]}
+- {id: "lhu_mem_r_data", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.mem_r_data ", width: 32 }]}
+- {id: "lhu_opcode", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "lhu_rd", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "lhu_reg_rd", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "lhu_reg_rs1", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "lhu_rs1", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "lhu_format", cond: "\\core0.rvfi_lhu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "lui_funct3", cond: "\\core0.rvfi_lui_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "lui_funct7", cond: "\\core0.rvfi_lui_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "lui_opcode", cond: "\\core0.rvfi_lui_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "lui_imm", cond: "\\core0.rvfi_lui_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "lui_rd", cond: "\\core0.rvfi_lui_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "lui_reg_rd", cond: "\\core0.rvfi_lui_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "lui_format", cond: "\\core0.rvfi_lui_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "lw_funct3", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "lw_funct7", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "lw_imm", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "lw_is_aligned", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.is_aligned ", width: 1 }]}
+- {id: "lw_is_half_aligned", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.is_half_aligned ", width: 1 }]}
+- {id: "lw_mem_addr", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.mem_addr ", width: 32 }]}
+- {id: "lw_mem_r_data", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.mem_r_data ", width: 32 }]}
+- {id: "lw_opcode", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "lw_rd", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "lw_reg_rd", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "lw_reg_rs1", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "lw_rs1", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "lw_format", cond: "\\core0.rvfi_lw_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "mul_funct3", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "mul_funct7", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "mul_imm", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "mul_opcode", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "mul_rd", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "mul_reg_rd", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "mul_reg_rs1", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "mul_reg_rs2", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "mul_reg_rs1_zero", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "mul_reg_rs2_zero", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "mul_reg_rs1_log2", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "mul_reg_rs2_log2", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "mul_rs1", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "mul_rs2", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "mul_format", cond: "\\core0.rvfi_mul_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "mulh_funct3", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "mulh_funct7", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "mulh_imm", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "mulh_opcode", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "mulh_rd", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "mulh_reg_rd", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "mulh_reg_rs1", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "mulh_reg_rs2", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "mulh_reg_rs1_zero", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "mulh_reg_rs2_zero", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "mulh_reg_rs1_log2", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "mulh_reg_rs2_log2", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "mulh_rs1", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "mulh_rs2", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "mulh_format", cond: "\\core0.rvfi_mulh_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "mulhsu_funct3", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "mulhsu_funct7", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "mulhsu_imm", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "mulhsu_opcode", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "mulhsu_rd", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "mulhsu_reg_rd", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "mulhsu_reg_rs1", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "mulhsu_reg_rs2", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "mulhsu_reg_rs1_zero", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "mulhsu_reg_rs2_zero", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "mulhsu_reg_rs1_log2", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "mulhsu_reg_rs2_log2", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "mulhsu_rs1", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "mulhsu_rs2", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "mulhsu_format", cond: "\\core0.rvfi_mulhsu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "mulhu_funct3", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "mulhu_funct7", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "mulhu_imm", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "mulhu_opcode", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "mulhu_rd", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "mulhu_reg_rd", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "mulhu_reg_rs1", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "mulhu_reg_rs2", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "mulhu_reg_rs1_zero", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "mulhu_reg_rs2_zero", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "mulhu_reg_rs1_log2", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "mulhu_reg_rs2_log2", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "mulhu_rs1", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "mulhu_rs2", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "mulhu_format", cond: "\\core0.rvfi_mulhu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "or_funct3", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "or_funct7", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "or_imm", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "or_opcode", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "or_rd", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "or_reg_rd", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "or_reg_rs1", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "or_reg_rs2", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "or_reg_rs1_zero", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "or_reg_rs2_zero", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "or_reg_rs1_log2", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "or_reg_rs2_log2", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "or_rs1", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "or_rs2", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "or_format", cond: "\\core0.rvfi_or_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "ori_funct3", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "ori_funct7", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "ori_opcode", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "ori_imm", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "ori_rd", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "ori_reg_rd", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "ori_reg_rs1", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "ori_rs1", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "ori_format", cond: "\\core0.rvfi_ori_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "rem_funct3", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "rem_funct7", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "rem_imm", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "rem_opcode", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "rem_rd", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "rem_reg_rd", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "rem_reg_rs1", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "rem_reg_rs2", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "rem_reg_rs1_zero", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "rem_reg_rs2_zero", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "rem_reg_rs1_log2", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "rem_reg_rs2_log2", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "rem_rs1", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "rem_rs2", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "rem_format", cond: "\\core0.rvfi_rem_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "remu_funct3", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "remu_funct7", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "remu_imm", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "remu_opcode", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "remu_rd", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "remu_reg_rd", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "remu_reg_rs1", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "remu_reg_rs2", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "remu_reg_rs1_zero", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "remu_reg_rs2_zero", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "remu_reg_rs1_log2", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "remu_reg_rs2_log2", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "remu_rs1", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "remu_rs2", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "remu_format", cond: "\\core0.rvfi_remu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "sb_funct3", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "sb_funct7", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "sb_is_aligned", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.is_aligned ", width: 1 }]}
+- {id: "sb_is_half_aligned", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.is_half_aligned ", width: 1 }]}
+- {id: "sb_mem_addr", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.mem_addr ", width: 32 }]}
+- {id: "sb_mem_w_data", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.mem_w_data ", width: 32 }]}
+- {id: "sb_opcode", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "sb_imm", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "sb_reg_rs1", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "sb_reg_rs2", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "sb_reg_rs1_zero", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "sb_reg_rs2_zero", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "sb_reg_rs1_log2", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "sb_reg_rs2_log2", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "sb_rs1", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "sb_rs2", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "sb_format", cond: "\\core0.rvfi_sb_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "sh_funct3", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "sh_funct7", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "sh_is_aligned", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.is_aligned ", width: 1 }]}
+- {id: "sh_is_half_aligned", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.is_half_aligned ", width: 1 }]}
+- {id: "sh_mem_addr", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.mem_addr ", width: 32 }]}
+- {id: "sh_mem_w_data", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.mem_w_data ", width: 32 }]}
+- {id: "sh_opcode", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "sh_imm", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "sh_reg_rs1", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "sh_reg_rs2", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "sh_reg_rs1_zero", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "sh_reg_rs2_zero", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "sh_reg_rs1_log2", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "sh_reg_rs2_log2", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "sh_rs1", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "sh_rs2", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "sh_format", cond: "\\core0.rvfi_sh_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "sll_funct3", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "sll_funct7", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "sll_imm", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "sll_opcode", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "sll_rd", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "sll_reg_rd", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "sll_reg_rs1", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "sll_reg_rs2", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "sll_reg_rs1_zero", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "sll_reg_rs2_zero", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "sll_reg_rs1_log2", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "sll_reg_rs2_log2", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "sll_rs1", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "sll_rs2", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "sll_format", cond: "\\core0.rvfi_sll_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "slli_funct3", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "slli_funct7", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "slli_imm", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "slli_opcode", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "slli_rd", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "slli_reg_rd", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "slli_reg_rs1", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "slli_reg_rs2", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "slli_reg_rs1_zero", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "slli_reg_rs2_zero", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "slli_reg_rs1_log2", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "slli_reg_rs2_log2", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "slli_rs1", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "slli_rs2", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "slli_format", cond: "\\core0.rvfi_slli_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "slt_funct3", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "slt_funct7", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "slt_imm", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "slt_opcode", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "slt_rd", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "slt_reg_rd", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "slt_reg_rs1", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "slt_reg_rs2", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "slt_reg_rs1_zero", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "slt_reg_rs2_zero", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "slt_reg_rs1_log2", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "slt_reg_rs2_log2", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "slt_rs1", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "slt_rs2", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "slt_format", cond: "\\core0.rvfi_slt_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "slti_funct3", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "slti_funct7", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "slti_opcode", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "slti_imm", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "slti_rd", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "slti_reg_rd", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "slti_reg_rs1", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "slti_rs1", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "slti_format", cond: "\\core0.rvfi_slti_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "sltiu_funct3", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "sltiu_funct7", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "sltiu_imm", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "sltiu_opcode", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "sltiu_rd", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "sltiu_reg_rd", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "sltiu_reg_rs1", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "sltiu_rs1", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "sltiu_format", cond: "\\core0.rvfi_sltiu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "sltu_funct3", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "sltu_funct7", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "sltu_imm", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "sltu_opcode", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "sltu_rd", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "sltu_reg_rd", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "sltu_reg_rs1", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "sltu_reg_rs2", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "sltu_reg_rs1_zero", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "sltu_reg_rs2_zero", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "sltu_reg_rs1_log2", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "sltu_reg_rs2_log2", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "sltu_rs1", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "sltu_rs2", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "sltu_format", cond: "\\core0.rvfi_sltu_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "sra_funct3", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "sra_funct7", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "sra_imm", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "sra_opcode", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "sra_rd", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "sra_reg_rd", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "sra_reg_rs1", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "sra_reg_rs2", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "sra_reg_rs1_zero", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "sra_reg_rs2_zero", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "sra_reg_rs1_log2", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "sra_reg_rs2_log2", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "sra_rs1", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "sra_rs2", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "sra_format", cond: "\\core0.rvfi_sra_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "srai_funct3", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "srai_funct7", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "srai_imm", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "srai_opcode", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "srai_rd", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "srai_reg_rd", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "srai_reg_rs1", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "srai_reg_rs2", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "srai_reg_rs1_zero", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "srai_reg_rs2_zero", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "srai_reg_rs1_log2", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "srai_reg_rs2_log2", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "srai_rs1", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "srai_rs2", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "srai_format", cond: "\\core0.rvfi_srai_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "srl_funct3", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "srl_funct7", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "srl_imm", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "srl_opcode", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "srl_rd", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "srl_reg_rd", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "srl_reg_rs1", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "srl_reg_rs2", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "srl_reg_rs1_zero", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "srl_reg_rs2_zero", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "srl_reg_rs1_log2", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "srl_reg_rs2_log2", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "srl_rs1", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "srl_rs2", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "srl_format", cond: "\\core0.rvfi_srl_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "srli_funct3", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "srli_funct7", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "srli_imm", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "srli_opcode", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "srli_rd", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "srli_reg_rd", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "srli_reg_rs1", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "srli_reg_rs2", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "srli_reg_rs1_zero", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "srli_reg_rs2_zero", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "srli_reg_rs1_log2", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "srli_reg_rs2_log2", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "srli_rs1", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "srli_rs2", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "srli_format", cond: "\\core0.rvfi_srli_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "sub_funct3", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "sub_funct7", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "sub_imm", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "sub_opcode", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "sub_rd", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "sub_reg_rd", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "sub_reg_rs1", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "sub_reg_rs2", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "sub_reg_rs1_zero", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "sub_reg_rs2_zero", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "sub_reg_rs1_log2", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "sub_reg_rs2_log2", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "sub_rs1", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "sub_rs2", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "sub_format", cond: "\\core0.rvfi_sub_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "sw_funct3", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "sw_funct7", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "sw_is_aligned", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.is_aligned ", width: 1 }]}
+- {id: "sw_is_half_aligned", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.is_half_aligned ", width: 1 }]}
+- {id: "sw_mem_addr", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.mem_addr ", width: 32 }]}
+- {id: "sw_mem_w_data", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.mem_w_data ", width: 32 }]}
+- {id: "sw_opcode", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "sw_imm", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "sw_reg_rs1", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "sw_reg_rs2", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "sw_reg_rs1_zero", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "sw_reg_rs2_zero", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "sw_reg_rs1_log2", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "sw_reg_rs2_log2", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "sw_rs1", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "sw_rs2", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "sw_format", cond: "\\core0.rvfi_sw_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "xor_funct3", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "xor_funct7", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "xor_imm", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "xor_opcode", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "xor_rd", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "xor_reg_rd", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "xor_reg_rs1", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "xor_reg_rs2", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.reg_rs2 ", width: 32 }]}
+- {id: "xor_reg_rs1_zero", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.reg_rs1_zero ", width: 1 }]}
+- {id: "xor_reg_rs2_zero", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.reg_rs2_zero ", width: 1 }]}
+- {id: "xor_reg_rs1_log2", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.reg_rs1_log2 ", width: 32 }]}
+- {id: "xor_reg_rs2_log2", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.reg_rs2_log2 ", width: 32 }]}
+- {id: "xor_rs1", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "xor_rs2", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.rs2 ", width: 5 }]}
+- {id: "xor_format", cond: "\\core0.rvfi_xor_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+- {id: "xori_funct3", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.funct3 ", width: 3 }]}
+- {id: "xori_funct7", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.funct7 ", width: 7 }]}
+- {id: "xori_imm", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.imm ", width: 32 }]}
+- {id: "xori_opcode", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.opcode ", width: 7 }]}
+- {id: "xori_rd", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.rd ", width: 5 }]}
+- {id: "xori_reg_rd", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.reg_rd ", width: 32 }]}
+- {id: "xori_reg_rs1", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.reg_rs1 ", width: 32 }]}
+- {id: "xori_rs1", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.rs1 ", width: 5 }]}
+- {id: "xori_format", cond: "\\core0.rvfi_xori_ctr" , attrs: [  { value: "\\core0.format ", width: 3 }]}
+
+
+# Retire predicates
+predicateRetire: []
+#  - {id: "Retire", cond: "1", attrs: [{value: "\\core0.retire", width: 1}]}
+
+### TARGET
+trgObservations: 
+ - {id: "Retire", cond: "1", attrs: [{value: "\\core0.retire", width: 1}]}
+
+
+stateInvariant: # if init is "1", it will only be assumed in cycle 0 
+   - {id: "RV32I", cond: "1", attrs: [{value: " ( \\core0.legal == 1 ) ", width: 1}]} #|| (\\Core_2stage.DatPath_2stage.exe_reg_inst [6:0] == 7'hf && \\Core_2stage.DatPath_2stage.exe_reg_inst [14:12] == 3'h1 ) || (\\Core_2stage.DatPath_2stage.exe_reg_inst [6:0] == 7'h73 && \\Core_2stage.DatPath_2stage.exe_reg_inst [14:12] == 3'h0 ) )", width: 1}]}
+  # - {id: "OprInvs", cond: "1", attrs: [ { value: "(((\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (\\core0.XRCC ) && (!\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (\\core0.XMAC ) ) || ((!\\core0.XLUI ) && (!\\core0.XAUIPC ) && (!\\core0.XJAL ) && (!\\core0.XJALR ) && (!\\core0.XBCC ) && (!\\core0.XLCC ) && (!\\core0.XSCC ) && (!\\core0.XMCC ) && (!\\core0.XRCC ) && (!\\core0.XMAC ) ) )", width: 1} ]} # (!XLUI ) && (!XAUIPC ) && (!XJAL ) && (!XJALR ) && (!XBCC ) && (!XLCC ) && (!XSCC ) && (!XMCC ) && (!XRCC ) && (!XMAC )
+  # - {id: "IRESInvs", cond: "1", attrs: [ { value: "IRES==0", width: 1}] }  
+  # - {id: "IDATAInvs", cond: "1", attrs: [ { value: " ( \\core0.IDATA == 0 ) == 0 ", width: 1}] }  
+  # - {id: "XRESInvs", cond: "1", attrs: [ { value: "\\core0.XRES == 0", width: 1}] }
+  # - {id: "PC_NXPC", cond: "1", attrs: [ {value: " ( ! ( \\core0.decode_reg && ( ! \\core0.FLUSH ) && ( \\core0.JAL || \\core0.JALR ) ) ) || ( \\core0.NXPC == \\core0.PC + 4 ) ", width: 1}]}
+  # - {id: "HLTInvs", cond: "1", attrs: [ { value: "DACK == 0 || IHITACK == 1", width: 1}] }
+  # - {id: "INSTR_PC", cond: "1", attrs: [ { value: " ( ! ( \\core0.FLUSH == 0 ) ) || INSTR_PC == \\core0.XIDATA", width: 1}] }
+  # - {id: "LDATA_PC", cond: "1", attrs: [ { value: " ( ! ( \\core0.FLUSH == 0 && \\core0.writeback && \\core0.LCC ) ) || \\core0.LDATA_PC == \\core0.LDATA", width: 1}] }
+  # - {id: "LCC_PC", cond: "1", attrs: [ { value: " ( ! ( \\core0.FLUSH == 0 ) ) || \\core0.LCC_PC == \\core0.LCC", width: 1}] }
+  # - {id: "MCC_PC", cond: "1", attrs: [ { value: " ( ! ( \\core0.FLUSH == 0 ) ) || \\core0.MCC_PC == \\core0.MCC", width: 1}] }
+  # - {id: "RCC_PC", cond: "1", attrs: [ { value: " ( ! ( \\core0.FLUSH == 0 ) ) || \\core0.RCC_PC == \\core0.RCC", width: 1}] }
+
+invariant: 
+  - {id: "PCs_inv1_1", cond: " ! \\core0.FLUSH ", attrs: [ {value: "\\core0.PC", width: 32}]}
+  - {id: "PCs_inv1_2", cond: " ! \\core0.FLUSH ", attrs: [ {value: "\\core0.NXPC", width: 32}]}
+  - {id: "PCs_inv2_1", cond: " \\core0.decode_reg && ! \\core0.FLUSH ", attrs: [ {value: "\\core0.PC", width: 32}]}
+  - {id: "PCs_inv2_2", cond: " \\core0.decode_reg && ! \\core0.FLUSH ", attrs: [ {value: "\\core0.NXPC", width: 32}]}
+  - {id: "HLT_FLUSH_inv", cond: " \\core0.HLT ", attrs: [ {value: "\\core0.FLUSH", width: 32}]}
+  - {id: "HLT_inv", cond: "\\core0.decode ", attrs: [ {value: "\\core0.HLT", width: 32}]}
+  - {id: "FLUSH_inv", cond: "\\core0.decode ", attrs: [ {value: "\\core0.FLUSH", width: 32}]}
+  - {id: "BCC_EXECUTE", cond: "\\core0.BCC", attrs: [ {value: "\\core0.U1REG", width: 32},{value: "\\core0.U2REG", width: 32}]}
+  - {id: "JALR_EXECUTE", cond: "\\core0.JALR", attrs: [ {value: "\\core0.U1REG", width: 32}]}
+  - {id: "LCC_ADDR", cond: "\\core0.LCC", attrs: [ {value: "\\core0.DADDR", width: 32}]}
+  - {id: "LCC_EXECUTE5", cond: " (\\core0.MCC || \\core0.RCC )", attrs: [ {value: "\\core0.RMDATA", width: 32}]}
+  - {id: "LCC_EXECUTE4", cond: " \\core0.LCC ", attrs: [ {value: "\\core0.LDATA", width: 32}]}
+  - {id: "LCC_EXECUTE1", cond: " \\core0.AUIPC ", attrs: [ {value: "\\core0.PCSIMM", width: 32}]}
+  - {id: "LCC_EXECUTE2", cond: " (\\core0.JAL || \\core0.JALR )", attrs: [ {value: "\\core0.NXPC", width: 32}]}
+  - {id: "LCC_EXECUTE3", cond: " \\core0.LUI ", attrs: [ {value: "\\core0.SIMM", width: 32}]}
+  - {id: "LCC_EXECUTE5_1", cond: " \\core0.writeback && (\\core0.MCC || \\core0.RCC )", attrs: [ {value: "\\core0.RMDATA", width: 32}]}
+  - {id: "LCC_EXECUTE4_1", cond: " \\core0.writeback && \\core0.LCC ", attrs: [ {value: "\\core0.LDATA", width: 32}]}
+  - {id: "LCC_EXECUTE1_1", cond: " \\core0.writeback && \\core0.AUIPC ", attrs: [ {value: "\\core0.PCSIMM", width: 32}]}
+  - {id: "LCC_EXECUTE2_1", cond: " \\core0.writeback && (\\core0.JAL || \\core0.JALR )", attrs: [ {value: "\\core0.NXPC", width: 32}]}
+  - {id: "LCC_EXECUTE3_1", cond: " \\core0.writeback && \\core0.LUI ", attrs: [ {value: "\\core0.SIMM", width: 32}]}
+  - {id: "SCC_EXECUTE", cond: "\\core0.SCC", attrs: [ {value: "\\core0.U2REG", width: 32}]}
+  # program counter
+  - {id: "PC", cond: "\\core0.decode", attrs: [{value: "\\core0.PC_flush", width: 32}]}
+  # When the instruction is a load, we attach the data address
+  - {id: "LOAD", cond: "\\core0.decode && \\core0.LCC", attrs: [ {value: "\\core0.DADDR", width: 32}]} 
+  # When the instruction is a write, we attach the data address
+  - {id: "STORE", cond: "\\core0.decode && \\core0.SCC", attrs: [ {value: "\\core0.DADDR", width: 32}]} 
+  # When the instruction is a load, we need the data loaded to the registers are the same
+  - {id: "DATAIinv", cond: "\\core0.decode && \\core0.LCC", attrs: [ {value: "\\core0.LDATA", width: 32}]} 
+  # Indicates that the instruction on fly of the two runs are the same
+  - {id: "INSTRinv2", cond: "\\core0.decode", attrs: [ {value: "\\core0.XIDATA_wire", width: 32}]}
+    # program counter
+  - {id: "PC1", cond: "\\core0.decode_reg", attrs: [{value: "\\core0.PC_flush", width: 32}]}
+  # When the instruction is a load, we attach the data address
+  - {id: "LOAD1", cond: "\\core0.decode_reg && \\core0.LCC", attrs: [ {value: "\\core0.DADDR", width: 32}]} 
+  # When the instruction is a write, we attach the data address
+  - {id: "STORE1", cond: "\\core0.decode_reg && \\core0.SCC", attrs: [ {value: "\\core0.DADDR", width: 32}]} 
+  # When the instruction is a load, we need the data loaded to the registers are the same
+  - {id: "DATAIinv1", cond: "\\core0.decode_reg && \\core0.LCC", attrs: [ {value: "\\core0.LDATA", width: 32}]} 
+  # Indicates that the instruction on fly of the two runs are the same
+  - {id: "INSTRinv3", cond: "\\core0.decode_reg", attrs: [ {value: "\\core0.XIDATA_next", width: 32}]}
+
+
+
+
+
+state: 
+  #1 rst signals 
+  - {id: "\\core0.XRES", expr: "\\core0.XRES", width: 1 , val : 1}
+  - {id: "\\core0.FLUSH", expr: "\\core0.FLUSH", width: 2 , val : 0} 
+  - {id: "\\core0.RESMODE", expr: "\\core0.RESMODE", width: 5 , val : 1}
+  # PCs signals
+  - {id: "\\core0.NXPC", expr: "\\core0.NXPC", width: 32, val : 0}
+  - {id: "\\core0.PC", expr: "\\core0.PC", width: 32, val : 0}
+  # 3 Internal control signals
+  - {id: "\\core0.XLUI", expr: "\\core0.XLUI", width: 1 , val : 0}
+  - {id: "\\core0.XAUIPC", expr: "\\core0.XAUIPC", width: 1 , val : 0}
+  - {id: "\\core0.XJAL", expr: "\\core0.XJAL", width: 1 , val : 0}
+  - {id: "\\core0.XJALR", expr: "\\core0.XJALR", width: 1 , val : 0}
+  - {id: "\\core0.XBCC", expr: "\\core0.XBCC", width: 1 , val : 0}
+  - {id: "\\core0.XLCC", expr: "\\core0.XLCC", width: 1 , val : 0}
+  - {id: "\\core0.XSCC", expr: "\\core0.XSCC", width: 1 , val : 0}
+  - {id: "\\core0.XMCC", expr: "\\core0.XMCC", width: 1 , val : 0}
+  - {id: "\\core0.XRCC", expr: "\\core0.XRCC", width: 1 , val : 0}
+  - {id: "\\core0.XMAC", expr: "\\core0.XMAC", width: 1 , val : 0}
+  #4 Internal data signals
+  - {id: "\\core0.XIDATA", expr: "\\core0.XIDATA", width: 32, val : 0}
+  - {id: "\\core0.XSIMM", expr: "\\core0.XSIMM", width: 32, val : 0}
+  - {id: "\\core0.XUIMM", expr: "\\core0.XUIMM", width: 32, val : 0}
+  # 5 UART signals
+  - {id: "\\uart0.UART_RFIFO", expr: "\\uart0.UART_RFIFO", width: 8 , val : 0}
+  - {id: "\\uart0.UART_RREQ", expr: "\\uart0.UART_RREQ", width: 1 , val : 0}
+  - {id: "\\uart0.UART_RBAUD", expr: "\\uart0.UART_RBAUD", width: 16 , val : 0}
+  - {id: "\\uart0.UART_RSTATE", expr: "\\uart0.UART_RSTATE", width: 4 , val : 0}
+  - {id: "\\uart0.UART_RXDFF", expr: "\\uart0.UART_RXDFF", width: 3 , val : 0}
+  - {id: "\\uart0.UART_XACK", expr: "\\uart0.UART_XACK", width: 1 , val : 0}
+  - {id: "\\uart0.UART_XBAUD", expr: "\\uart0.UART_XBAUD", width: 16 , val : 0}
+  - {id: "\\uart0.UART_XSTATE", expr: "\\uart0.UART_XSTATE", width: 4 , val : 0}
+  - {id: "\\uart0.UART_XFIFO", expr: "\\uart0.UART_XFIFO", width: 8 , val : 0}
+  - {id: "\\uart0.UART_XREQ", expr: "\\uart0.UART_XREQ", width: 1 , val : 0}
+  - {id: "\\uart0.UART_RACK", expr: "\\uart0.UART_RACK", width: 1 , val : 0}
+  - {id: "\\uart0.UART_STATEFF", expr: "\\uart0.UART_STATEFF", width: 8 , val : 0}
+  #6 external signals
+  - {id: "GPIOFF", expr: "GPIOFF", width: 16 , val : 0}
+  - {id: "LEDFF", expr: "LEDFF", width: 16 , val : 0}
+  - {id: "IREQ", expr: "IREQ", width: 8 , val : 0}
+  - {id: "IACK", expr: "IACK", width: 8 , val : 0}
+  - {id: "TIMERFF", expr: "TIMERFF", width: 32 , val : 0}
+  - {id: "TIMER", expr: "TIMER", width: 32 , val : 0}
+  - {id: "XTIMER", expr: "XTIMER", width: 1 , val : 0}
+  - {id: "IOMUXFF", expr: "IOMUXFF", width: 32 , val : 0}
+  - {id: "XADDR", expr: "XADDR", width: 32 , val : 0}
+  - {id: "RAMFF", expr: "RAMFF", width: 32, val : 0}
+  - {id: "DACK", expr: "DACK", width: 1 , val : 0}
+  - {id: "ROMFF", expr: "ROMFF", width: 32, val : 0}
+  - {id: "IHITACK", expr: "IHITACK", width: 1 , val : 1}
+  - {id: "IRES", expr: "IRES", width: 8 , val : 0}
+  # For contract
+  # - {id: "\\core0.retire", expr: "\\core0.retire", width: 1 , val : 0}
+  - {id: "\\core0.PC_retire", expr: "\\core0.PC_retire", width: 32 , val : 0}
+  - {id: "\\core0.DelayLDATA", expr: "\\core0.DelayLDATA", width: 32 , val : 0}
+  - {id: "\\core0.DelayLCC", expr: "\\core0.DelayLCC", width: 1 , val : 0}
+  - {id: "\\core0.DelayDADDR", expr: "\\core0.DelayDADDR", width: 32 , val : 0}
+  - {id: "\\core0.DelaySCC", expr: "\\core0.DelaySCC", width: 1 , val : 0}
+  - {id: "\\core0.DelayXIDATA_next", expr: "\\core0.DelayXIDATA_next", width: 32 , val : 0}
+  - {id: "\\core0.DelayBCC", expr: "\\core0.DelayBCC", width: 1 , val : 0}
+  - {id: "\\core0.DelayU1REG", expr: "\\core0.DelayU1REG", width: 32 , val : 0}
+  - {id: "\\core0.DelayJALR", expr: "\\core0.DelayJALR", width: 1 , val : 0}
+  - {id: "\\core0.DelayU2REG", expr: "\\core0.DelayU2REG", width: 32 , val : 0}
+  # predicates
+  - {id: "\\core0.writeback_reg", expr: "\\core0.writeback_reg", width: 1 , val : 0}
+  - {id: "\\core0.decode_reg", expr: "\\core0.decode_reg", width: 1 , val : 0}
+
+inputs:
+  - {id: "XCLK", valueLeft: "XCLK", valueRight: "XCLK"}
+  - {id: "XRES", valueLeft: "1'h0", valueRight: "1'h0"}
+  - {id: "UART_RXD", valueLeft: "UART_RXDLeft", valueRight: "UART_RXDRight"}
+  - {id: "UART_TXD", valueLeft: "UART_TXDLeft", valueRight: "UART_TXDRight"}
+  - {id: "LED", valueLeft: "LEDLeft", valueRight: "LEDRight"}
+  - {id: "DEBUG", valueLeft: "DEBUGLeft", valueRight: "DEBUGRight"}
+  - {id: "stuttering_signal", valueLeft: "stuttering_left", valueRight: "stuttering_right"}
+  
+expandArrays:
+ - {filename: "darksocv_2stages.v", array: "ROM", i: "32", j: "1024", var: "ROM_flat", flatten: "True"}
+ - {filename: "darksocv_2stages.v", array: "RAM", i: "32", j: "1024", var: "RAM_flat", flatten: "True"}
+#  - {filename: "darkriscv_2stages.v", array: "REG1", i: "32", j: "16", var: "REG1_flat", flatten: "True"}
+#  - {filename: "darkriscv_2stages.v", array: "REG2", i: "32", j: "16", var: "REG2_flat", flatten: "True"}
+
+  
+
+auxiliaryVariables:
+  - {id: "\\core0.BE", value: "\\core0.BE", width: 4}
+  - {id: "\\core0.DATAO", value: "\\core0.DATAO", width: 32}
+  - {id: "\\core0.DATAI", value: "\\core0.DATAI", width: 32}
+  - {id: "\\core0.DADDR", value: "\\core0.DADDR", width: 32}
+  - {id: "\\core0.IADDR", value: "\\core0.IADDR", width: 32}
+  - {id: "ROM", width: 32768, value: "ROM_flat"}
+  - {id: "RAM", width: 32768, value: "RAM_flat"}
+  - {id: "\\core0.REG1", width: 512, value: "\\core0.REG1_flat"}
+  - {id: "\\core0.REG2", width: 512, value: "\\core0.REG2_flat"}
+  - {id: "ROMFF", value: "ROMFF", width: 32}
+  - {id: "RAMFF", value: "RAMFF", width: 32}
+  - {id: "\\core0.XIDATA", value: "\\core0.XIDATA", width: 32}
+  - {id: "\\core0.XSIMM", value: "\\core0.XSIMM", width: 32}
+  - {id: "\\core0.XUIMM", value: "\\core0.XUIMM", width: 32}
+  - {id: "\\core0.NXPC", value: "\\core0.NXPC", width: 32}
+  - {id: "\\core0.PC", value: "\\core0.PC", width: 32}
+  - {id: "\\core0.JAL", value: "\\core0.JAL", width: 1}
+  - {id: "\\core0.JALR", value: "\\core0.JALR", width: 1}
+  - {id: "\\core0.BMUX", value: "\\core0.BMUX", width: 1}
+  - {id: "\\core0.JREQ", value: "\\core0.JREQ", width: 1}
+  - {id: "\\core0.FCT3", value: "\\core0.FCT3", width: 3}
+  - {id: "\\core0.U1REG", value: "\\core0.U1REG", width: 32}
+  - {id: "\\core0.U2REG", value: "\\core0.U2REG", width: 32}
+  - {id: "\\core0.BCC", value: "\\core0.BCC", width: 1}
+  - {id: "\\core0.FLUSH", value: "\\core0.FLUSH", width: 2}
+  - {id: "\\core0.WR", value: "\\core0.WR"}
+  - {id: "\\core0.RD", value: "\\core0.RD"}
+  - {id: "\\core0.HTL", value: "\\core0.HLT"}
+  - {id: "IRES", value: "IRES", width: 8}
+  - {id: "\\core0.XRES", value: "\\core0.XRES", width: 1 }
+  - {id: "\\core0.RESMODE", value: "\\core0.RESMODE", width: 4 }
+  - {id: "\\core0.XLUI", value: "\\core0.XLUI", width: 1 }
+  - {id: "\\core0.XAUIPC", value: "\\core0.XAUIPC", width: 1 }
+  - {id: "\\core0.XJAL", value: "\\core0.XJAL", width: 1 }
+  - {id: "\\core0.XJALR", value: "\\core0.XJALR", width: 1 }
+  - {id: "\\core0.XBCC", value: "\\core0.XBCC", width: 1 }
+  - {id: "\\core0.XLCC", value: "\\core0.XLCC", width: 1 }
+  - {id: "\\core0.XSCC", value: "\\core0.XSCC", width: 1 }
+  - {id: "\\core0.XMCC", value: "\\core0.XMCC", width: 1 }
+  - {id: "\\core0.XRCC", value: "\\core0.XRCC", width: 1 }
+  - {id: "\\core0.XMAC", value: "\\core0.XMAC", width: 1 }
+  - {id: "\\uart0UART_RFIFO", value: "\\uart0.UART_RFIFO", width: 8 }
+  - {id: "\\uart0UART_RREQ", value: "\\uart0.UART_RREQ", width: 1 }
+  - {id: "\\uart0UART_RBAUD", value: "\\uart0.UART_RBAUD", width: 16 }
+  - {id: "\\uart0UART_RSTATE", value: "\\uart0.UART_RSTATE", width: 4 }
+  - {id: "\\uart0UART_RXDFF", value: "\\uart0.UART_RXDFF", width: 3 }
+  - {id: "\\uart0UART_XACK", value: "\\uart0.UART_XACK", width: 1 }
+  - {id: "\\uart0UART_XBAUD", value: "\\uart0.UART_XBAUD", width: 16 }
+  - {id: "\\uart0UART_XSTATE", value: "\\uart0.UART_XSTATE", width: 4 }
+  - {id: "\\uart0UART_XFIFO", value: "\\uart0.UART_XFIFO", width: 8 }
+  - {id: "\\uart0UART_XREQ", value: "\\uart0.UART_XREQ", width: 1 }
+  - {id: "\\uart0UART_RACK", value: "\\uart0.UART_RACK", width: 1 }
+  - {id: "\\uart0UART_STATEFF", value: "\\uart0.UART_STATEFF", width: 8 }
+  - {id: "GPIOFF", value: "GPIOFF", width: 16 }
+  - {id: "LEDFF", value: "LEDFF", width: 16 }
+  - {id: "IREQ", value: "IREQ", width: 8 }
+  - {id: "IACK", value: "IACK", width: 8 }
+  - {id: "TIMERFF", value: "TIMERFF", width: 32 }
+  - {id: "TIMER", value: "TIMER", width: 32 }
+  - {id: "XTIMER", value: "XTIMER", width: 1 }
+  - {id: "IOMUXFF", value: "IOMUXFF", width: 32 }
+  - {id: "XADDR", value: "XADDR", width: 32 } 
+  - {id: "RAMFF", value: "RAMFF", width: 32 }
+  - {id: "DACK", value: "DACK", width: 2 }
+  - {id: "ROMFF", value: "ROMFF", width: 32 }
+  - {id: "HLT2", value: "HLT2", width: 1 }
+  - {id: "IHITACK", value: "IHITACK", width: 2 }
+  - {id: "XATAI", value: "XATAI", width: 32 }
+  - {id: "XATAO", value: "XATAO", width: 32 }

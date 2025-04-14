@@ -1,0 +1,287 @@
+candidateContractAtoms:
+# AND: REG_RD
+  - {id: "and_reg_rd", cond: "\\ibex_core.rvfi_and_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# AND: REG_RS1
+  - {id: "and_reg_rs1", cond: "\\ibex_core.rvfi_and_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# AND: REG_RS2
+  - {id: "and_reg_rs2", cond: "\\ibex_core.rvfi_and_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# ANDI: REG_RD
+  - {id: "andi_reg_rd", cond: "\\ibex_core.rvfi_andi_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# ANDI: REG_RS1
+  - {id: "andi_reg_rs1", cond: "\\ibex_core.rvfi_andi_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# AUIPC: REG_RD
+  - {id: "auipc_reg_rd", cond: "\\ibex_core.rvfi_auipc_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# BEQ: BRANCH_TAKEN
+  - {id: "beq_branch_taken", cond: "\\ibex_core.rvfi_beq_ctr", attrs: [ {value: " \\ibex_core.branch_taken ", width: 1}]} 
+# BEQ: REG_RS1
+  - {id: "beq_reg_rs1", cond: "\\ibex_core.rvfi_beq_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# BEQ: REG_RS2
+  - {id: "beq_reg_rs2", cond: "\\ibex_core.rvfi_beq_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# BGE: BRANCH_TAKEN
+  - {id: "bge_branch_taken", cond: "\\ibex_core.rvfi_bge_ctr", attrs: [ {value: " \\ibex_core.branch_taken ", width: 1}]} 
+# BGE: REG_RS1
+  - {id: "bge_reg_rs1", cond: "\\ibex_core.rvfi_bge_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# BGE: REG_RS2
+  - {id: "bge_reg_rs2", cond: "\\ibex_core.rvfi_bge_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# BGEU: BRANCH_TAKEN
+  - {id: "bgeu_branch_taken", cond: "\\ibex_core.rvfi_bgeu_ctr", attrs: [ {value: " \\ibex_core.branch_taken ", width: 1}]} 
+# BGEU: REG_RS1
+  - {id: "bgeu_reg_rs1", cond: "\\ibex_core.rvfi_bgeu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# BGEU: REG_RS2
+  - {id: "bgeu_reg_rs2", cond: "\\ibex_core.rvfi_bgeu_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# BLT: BRANCH_TAKEN
+  - {id: "blt_branch_taken", cond: "\\ibex_core.rvfi_blt_ctr", attrs: [ {value: " \\ibex_core.branch_taken ", width: 1}]} 
+# BLT: REG_RS1
+  - {id: "blt_reg_rs1", cond: "\\ibex_core.rvfi_blt_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# BLT: REG_RS2
+  - {id: "blt_reg_rs2", cond: "\\ibex_core.rvfi_blt_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# BLTU: BRANCH_TAKEN
+  - {id: "bltu_branch_taken", cond: "\\ibex_core.rvfi_bltu_ctr", attrs: [ {value: " \\ibex_core.branch_taken ", width: 1}]} 
+# BLTU: REG_RS1
+  - {id: "bltu_reg_rs1", cond: "\\ibex_core.rvfi_bltu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# BLTU: REG_RS2
+  - {id: "bltu_reg_rs2", cond: "\\ibex_core.rvfi_bltu_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# BNE: BRANCH_TAKEN
+  - {id: "bne_branch_taken", cond: "\\ibex_core.rvfi_bne_ctr", attrs: [ {value: " \\ibex_core.branch_taken ", width: 1}]} 
+# BNE: REG_RS1
+  - {id: "bne_reg_rs1", cond: "\\ibex_core.rvfi_bne_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# BNE: REG_RS2
+  - {id: "bne_reg_rs2", cond: "\\ibex_core.rvfi_bne_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# DIV: REG_RD
+  - {id: "div_reg_rd", cond: "\\ibex_core.rvfi_div_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# DIV: REG_RS1
+  - {id: "div_reg_rs1", cond: "\\ibex_core.rvfi_div_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# DIV: REG_RS2
+  - {id: "div_reg_rs2", cond: "\\ibex_core.rvfi_div_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# DIVU: REG_RD
+  - {id: "divu_reg_rd", cond: "\\ibex_core.rvfi_divu_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# DIVU: REG_RS1
+  - {id: "divu_reg_rs1", cond: "\\ibex_core.rvfi_divu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# DIVU: REG_RS2
+  - {id: "divu_reg_rs2", cond: "\\ibex_core.rvfi_divu_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# JAL: BRANCH_TAKEN  
+  - {id: "jal_branch_taken", cond: "\\ibex_core.rvfi_jal_ctr", attrs: [ {value: " \\ibex_core.branch_taken ", width: 1}]} 
+# JAL: REG_RD
+  - {id: "jal_reg_rd", cond: "\\ibex_core.rvfi_jal_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# JALR: BRANCH_TAKEN
+  - {id: "jalr_branch_taken", cond: "\\ibex_core.rvfi_jalr_ctr", attrs: [ {value: " \\ibex_core.branch_taken ", width: 1}]} 
+# JALR: REG_RD
+  - {id: "jalr_reg_rd", cond: "\\ibex_core.rvfi_jalr_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# JALR: REG_RS1
+  - {id: "jalr_reg_rs1", cond: "\\ibex_core.rvfi_jalr_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# LB: IS_ALIGNED
+  - {id: "lb_is_aligned", cond: "\\ibex_core.rvfi_lb_ctr", attrs: [ {value: " \\ibex_core.is_aligned ", width: 1}]} 
+# LB: IS_HALF_ALIGNED
+  - {id: "lb_is_half_aligned", cond: "\\ibex_core.rvfi_lb_ctr", attrs: [ {value: " \\ibex_core.is_half_aligned ", width: 1}]} 
+# LB: MEM_ADDR
+  - {id: "lb_mem_addr", cond: "\\ibex_core.rvfi_lb_ctr", attrs: [ {value: " \\ibex_core.mem_addr ", width: 32}]} 
+# LB: MEM_R_DATA
+  - {id: "lb_mem_r_data", cond: "\\ibex_core.rvfi_lb_ctr", attrs: [ {value: " \\ibex_core.mem_r_data ", width: 32}]} 
+# LB: REG_RD
+  - {id: "lb_reg_rd", cond: "\\ibex_core.rvfi_lb_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# LB: REG_RS1
+  - {id: "lb_reg_rs1", cond: "\\ibex_core.rvfi_lb_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# LBU: IS_ALIGNED
+  - {id: "lbu_is_aligned", cond: "\\ibex_core.rvfi_lbu_ctr", attrs: [ {value: " \\ibex_core.is_aligned ", width: 1}]} 
+# LBU: IS_HALF_ALIGNED
+  - {id: "lbu_is_half_aligned", cond: "\\ibex_core.rvfi_lbu_ctr", attrs: [ {value: " \\ibex_core.is_half_aligned ", width: 1}]} 
+# LBU: MEM_ADDR
+  - {id: "lbu_mem_addr", cond: "\\ibex_core.rvfi_lbu_ctr", attrs: [ {value: " \\ibex_core.mem_addr ", width: 32}]} 
+# LBU: MEM_R_DATA
+  - {id: "lbu_mem_r_data", cond: "\\ibex_core.rvfi_lbu_ctr", attrs: [ {value: " \\ibex_core.mem_r_data ", width: 32}]} 
+# LBU: REG_RD
+  - {id: "lbu_reg_rd", cond: "\\ibex_core.rvfi_lbu_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# LBU: REG_RS1
+  - {id: "lbu_reg_rs1", cond: "\\ibex_core.rvfi_lbu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# LH: IS_ALIGNED
+  - {id: "lh_is_aligned", cond: "\\ibex_core.rvfi_lh_ctr", attrs: [ {value: " \\ibex_core.is_aligned ", width: 1}]} 
+# LH: IS_HALF_ALIGNED
+  - {id: "lh_is_half_aligned", cond: "\\ibex_core.rvfi_lh_ctr", attrs: [ {value: " \\ibex_core.is_half_aligned ", width: 1}]} 
+# LH: MEM_ADDR
+  - {id: "lh_mem_addr", cond: "\\ibex_core.rvfi_lh_ctr", attrs: [ {value: " \\ibex_core.mem_addr ", width: 32}]} 
+# LH: MEM_R_DATA
+  - {id: "lh_mem_r_data", cond: "\\ibex_core.rvfi_lh_ctr", attrs: [ {value: " \\ibex_core.mem_r_data ", width: 32}]} 
+# LH: REG_RD
+  - {id: "lh_reg_rd", cond: "\\ibex_core.rvfi_lh_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# LH: REG_RS1
+  - {id: "lh_reg_rs1", cond: "\\ibex_core.rvfi_lh_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# LHU: IS_ALIGNED
+  - {id: "lhu_is_aligned", cond: "\\ibex_core.rvfi_lhu_ctr", attrs: [ {value: " \\ibex_core.is_aligned ", width: 1}]} 
+# LHU: IS_HALF_ALIGNED
+  - {id: "lhu_ia_half_aligned", cond: "\\ibex_core.rvfi_lhu_ctr", attrs: [ {value: " \\ibex_core.is_half_aligned ", width: 1}]} 
+# LHU: MEM_ADDR
+  - {id: "lhu_mem_addr", cond: "\\ibex_core.rvfi_lhu_ctr", attrs: [ {value: " \\ibex_core.mem_addr ", width: 32}]} 
+# LHU: MEM_R_DATA
+  - {id: "lhu_mem_r_data", cond: "\\ibex_core.rvfi_lhu_ctr", attrs: [ {value: " \\ibex_core.mem_r_data ", width: 32}]} 
+# LHU: REG_RD
+  - {id: "lhu_reg_rd", cond: "\\ibex_core.rvfi_lhu_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# LHU: REG_RS1
+  - {id: "lh_reg_rs1", cond: "\\ibex_core.rvfi_lhu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# LUI: REG_RD
+  - {id: "lui_reg_rd", cond: "\\ibex_core.rvfi_lui_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# LW: IS_ALIGNED
+  - {id: "lw_is_aligned", cond: "\\ibex_core.rvfi_lw_ctr", attrs: [ {value: " \\ibex_core.is_aligned ", width: 1}]} 
+# LW: IS_HALF_ALIGNED
+  - {id: "lw_ia_half_aligned", cond: "\\ibex_core.rvfi_lw_ctr", attrs: [ {value: " \\ibex_core.is_half_aligned ", width: 1}]} 
+# LW: MEM_ADDR
+  - {id: "lw_mem_addr", cond: "\\ibex_core.rvfi_lw_ctr", attrs: [ {value: " \\ibex_core.mem_addr ", width: 32}]} 
+# LW: MEM_R_DATA
+  - {id: "lw_mem_r_data", cond: "\\ibex_core.rvfi_lw_ctr", attrs: [ {value: " \\ibex_core.mem_r_data ", width: 32}]} 
+# LW: REG_RD
+  - {id: "lw_reg_rd", cond: "\\ibex_core.rvfi_lw_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# LW: REG_RS1
+  - {id: "lw_reg_rs1", cond: "\\ibex_core.rvfi_lw_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# MUL: REG_RD
+  - {id: "mul_reg_rd", cond: "\\ibex_core.rvfi_mul_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# MUL: REG_RS1
+  - {id: "mul_reg_rs1", cond: "\\ibex_core.rvfi_mul_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# MUL: REG_RS2
+  - {id: "mul_reg_rs2", cond: "\\ibex_core.rvfi_mul_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# MULH: REG_RD
+  - {id: "mulh_reg_rd", cond: "\\ibex_core.rvfi_mulh_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# MULH: REG_RS1
+  - {id: "mulh_reg_rs1", cond: "\\ibex_core.rvfi_mulh_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# MULH: REG_RS2
+  - {id: "mulh_reg_rs2", cond: "\\ibex_core.rvfi_mulh_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# MULHSU: REG_RD
+  - {id: "mulhsu_reg_rd", cond: "\\ibex_core.rvfi_mulhsu_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# MULHSU: REG_RS1
+  - {id: "mulhsu_reg_rs1", cond: "\\ibex_core.rvfi_mulhsu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# MULHSU: REG_RS2
+  - {id: "mulhsu_reg_rs2", cond: "\\ibex_core.rvfi_mulhsu_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# MULHU: REG_RD
+  - {id: "mulhu_reg_rd", cond: "\\ibex_core.rvfi_mulhu_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# MULHU: REG_RS1
+  - {id: "mulhu_reg_rs1", cond: "\\ibex_core.rvfi_mulhu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# MULHU: REG_RS2
+  - {id: "mulhu_reg_rs2", cond: "\\ibex_core.rvfi_mulhu_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# OR: REG_RD
+  - {id: "or_reg_rd", cond: "\\ibex_core.rvfi_or_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# OR: REG_RS1
+  - {id: "or_reg_rs1", cond: "\\ibex_core.rvfi_or_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# OR: REG_RS2
+  - {id: "or_reg_rs2", cond: "\\ibex_core.rvfi_or_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# ORI: REG_RD
+  - {id: "ori_reg_rd", cond: "\\ibex_core.rvfi_ori_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# ORI: REG_RS1
+  - {id: "ori_reg_rs1", cond: "\\ibex_core.rvfi_ori_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# REM: REG_RD
+  - {id: "rem_reg_rd", cond: "\\ibex_core.rvfi_rem_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# REM: REG_RS1
+  - {id: "rem_reg_rs1", cond: "\\ibex_core.rvfi_rem_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# REM: REG_RS2
+  - {id: "rem_reg_rs2", cond: "\\ibex_core.rvfi_rem_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# REMU: REG_RD
+  - {id: "remu_reg_rd", cond: "\\ibex_core.rvfi_remu_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# REMU: REG_RS1
+  - {id: "remu_reg_rs1", cond: "\\ibex_core.rvfi_remu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# REMU: REG_RS2
+  - {id: "remu_reg_rs2", cond: "\\ibex_core.rvfi_remu_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SB: IS_ALIGNED
+  - {id: "sb_is_aligned", cond: "\\ibex_core.rvfi_sb_ctr", attrs: [ {value: " \\ibex_core.is_aligned ", width: 1}]} 
+# SB: IS_HALF_ALIGNED
+  - {id: "sb_is_half_aligned", cond: "\\ibex_core.rvfi_sb_ctr", attrs: [ {value: " \\ibex_core.is_half_aligned ", width: 1}]} 
+# SB: MEM_ADDR
+  - {id: "sb_mem_addr", cond: "\\ibex_core.rvfi_sb_ctr", attrs: [ {value: " \\ibex_core.mem_addr ", width: 32}]} 
+# SB: MEM_W_DATA
+  - {id: "sb_mem_w_data", cond: "\\ibex_core.rvfi_sb_ctr", attrs: [ {value: " \\ibex_core.mem_w_data ", width: 32}]} 
+# SB: REG_RS1
+  - {id: "sb_reg_rs1", cond: "\\ibex_core.rvfi_sb_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SB: REG_RS2
+  - {id: "sb_reg_rs2", cond: "\\ibex_core.rvfi_sb_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SH: IS_ALIGNED
+  - {id: "sh_is_aligned", cond: "\\ibex_core.rvfi_sh_ctr", attrs: [ {value: " \\ibex_core.is_aligned ", width: 1}]} 
+# SH: IS_HALF_ALIGNED
+  - {id: "sh_is_half_aligned", cond: "\\ibex_core.rvfi_sh_ctr", attrs: [ {value: " \\ibex_core.is_half_aligned ", width: 1}]} 
+# SH: MEM_ADDR
+  - {id: "sh_mem_addr", cond: "\\ibex_core.rvfi_sh_ctr", attrs: [ {value: " \\ibex_core.mem_addr ", width: 32}]} 
+# SH: MEM_W_DATA
+  - {id: "sh_mem_w_data", cond: "\\ibex_core.rvfi_sh_ctr", attrs: [ {value: " \\ibex_core.mem_w_data ", width: 32}]} 
+# SH: REG_RS1
+  - {id: "sh_reg_rs1", cond: "\\ibex_core.rvfi_sh_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SH: REG_RS2
+  - {id: "sh_reg_rs2", cond: "\\ibex_core.rvfi_sh_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SLL: REG_RD
+  - {id: "sll_reg_rd", cond: "\\ibex_core.rvfi_sll_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SLL: REG_RS1
+  - {id: "sll_reg_rs1", cond: "\\ibex_core.rvfi_sll_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SLL: REG_RS2
+  - {id: "sll_reg_rs2", cond: "\\ibex_core.rvfi_sll_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SLLI: REG_RD
+  - {id: "and_reg_rd", cond: "\\ibex_core.rvfi_slli_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SLLI: REG_RS1
+  - {id: "slli_reg_rs1", cond: "\\ibex_core.rvfi_slli_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SLLI: REG_RS2
+  - {id: "slli_reg_rs2", cond: "\\ibex_core.rvfi_slli_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SLT: REG_RD
+  - {id: "slt_reg_rd", cond: "\\ibex_core.rvfi_slt_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SLT: REG_RS1
+  - {id: "slt_reg_rs1", cond: "\\ibex_core.rvfi_slt_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SLT: REG_RS2
+  - {id: "slt_reg_rs2", cond: "\\ibex_core.rvfi_slt_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SLTI: REG_RD
+  - {id: "slti_reg_rd", cond: "\\ibex_core.rvfi_slti_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SLTI: REG_RS1
+  - {id: "slti_reg_rs1", cond: "\\ibex_core.rvfi_slti_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SLTIU: REG_RD
+  - {id: "sltiu_reg_rd", cond: "\\ibex_core.rvfi_sltiu_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SLTIU: REG_RS1
+  - {id: "sltiu_reg_rs1", cond: "\\ibex_core.rvfi_sltiu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SLTU: REG_RD
+  - {id: "sltu_reg_rd", cond: "\\ibex_core.rvfi_sltu_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SLTU: REG_RS1
+  - {id: "sltu_reg_rs1", cond: "\\ibex_core.rvfi_sltu_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SLTU: REG_RS2
+  - {id: "sltu_reg_rs2", cond: "\\ibex_core.rvfi_sltu_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SRA: REG_RD
+  - {id: "sra_reg_rd", cond: "\\ibex_core.rvfi_sra_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SRA: REG_RS1
+  - {id: "sra_reg_rs1", cond: "\\ibex_core.rvfi_sra_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SRA: REG_RS2
+  - {id: "sra_reg_rs2", cond: "\\ibex_core.rvfi_sra_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SRAI: REG_RD
+  - {id: "srai_reg_rd", cond: "\\ibex_core.rvfi_srai_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SRAI: REG_RS1
+  - {id: "srai_reg_rs1", cond: "\\ibex_core.rvfi_srai_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SRAI: REG_RS2
+  - {id: "srai_reg_rs2", cond: "\\ibex_core.rvfi_srai_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SRL: REG_RD
+  - {id: "srl_reg_rd", cond: "\\ibex_core.rvfi_srl_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SRL: REG_RS1
+  - {id: "srl_reg_rs1", cond: "\\ibex_core.rvfi_srl_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SRL: REG_RS2
+  - {id: "srl_reg_rs2", cond: "\\ibex_core.rvfi_srl_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SRLI: REG_RD
+  - {id: "srli_reg_rd", cond: "\\ibex_core.rvfi_srli_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SRLI: REG_RS1
+  - {id: "srli_reg_rs1", cond: "\\ibex_core.rvfi_srli_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SRLI: REG_RS2
+  - {id: "srli_reg_rs2", cond: "\\ibex_core.rvfi_srli_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SUB: REG_RD
+  - {id: "sub_reg_rd", cond: "\\ibex_core.rvfi_sub_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# SUB: REG_RS1
+  - {id: "sub_reg_rs1", cond: "\\ibex_core.rvfi_sub_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SUB: REG_RS2
+  - {id: "sub_reg_rs2", cond: "\\ibex_core.rvfi_sub_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# SW: IS_ALIGNED
+  - {id: "sw_is_aligned", cond: "\\ibex_core.rvfi_sw_ctr", attrs: [ {value: " \\ibex_core.is_aligned ", width: 1}]} 
+# SW: IS_HALF_ALIGNED
+  - {id: "sw_is_half_aligned", cond: "\\ibex_core.rvfi_sw_ctr", attrs: [ {value: " \\ibex_core.is_half_aligned ", width: 1}]} 
+# SW: MEM_ADDR
+  - {id: "sw_mem_addr", cond: "\\ibex_core.rvfi_sw_ctr", attrs: [ {value: " \\ibex_core.mem_addr ", width: 32}]} 
+# SW: MEM_W_DATA
+  - {id: "sw_mem_w_data", cond: "\\ibex_core.rvfi_sw_ctr", attrs: [ {value: " \\ibex_core.mem_w_data ", width: 32}]} 
+# SW: REG_RS1
+  - {id: "sw_reg_rs1", cond: "\\ibex_core.rvfi_sw_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# SW: REG_RS2
+  - {id: "sw_reg_rs2", cond: "\\ibex_core.rvfi_sw_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# XOR: REG_RD
+  - {id: "xor_reg_rd", cond: "\\ibex_core.rvfi_xor_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# XOR: REG_RS1
+  - {id: "xor_reg_rs1", cond: "\\ibex_core.rvfi_xor_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
+# XOR: REG_RS2
+  - {id: "xor_reg_rs2", cond: "\\ibex_core.rvfi_xor_ctr", attrs: [ {value: " \\ibex_core.reg_rs2 ", width: 32}]} 
+# XORI: REG_RD
+  - {id: "xori_reg_rd", cond: "\\ibex_core.rvfi_xori_ctr", attrs: [ {value: " \\ibex_core.reg_rd ", width: 32}]} 
+# XORI: REG_RS1
+  - {id: "xori_reg_rs1", cond: "\\ibex_core.rvfi_xori_ctr", attrs: [ {value: " \\ibex_core.reg_rs1 ", width: 32}]} 
