@@ -1,6 +1,6 @@
 ## Compile the Yosys passes
 
-LeaVe relies on three Yosys custom passes to prepare the processor design for verification. These passes need to be compiled before using LeaVe. Run `make -C yosys-passes` or follow the instructions in folder `yosys-passes` for more detailed instructions.
+LeaSyn relies on three Yosys custom passes to prepare the processor design for verification. These passes need to be compiled before using LeaVe. Run `make -C yosys-passes` or follow the instructions in folder `yosys-passes` for more detailed instructions.
 
 ## Reproducing the results from the paper
 
@@ -10,7 +10,7 @@ Below, `$TARGET` is one of  [`DarkRISCV-2`,`DarkRISCV-3`,`Sodor-2`,`ibex-small`,
 
 1. In the configuration file `config/$TARGET.yaml`, change the value of the `yosysPath` option to point to the Yosys's executable in your machine, e.g., `yosys-root-path/yosys`. Change the parameters accordingly, e.g., the BMC bound, the strategy for encoding property...
 
-2. Run LeaVe by executing `python3 cli.py config/$TARGET.yaml`.
+2. Run LeaSyn by executing `python3 cli.py config/$TARGET.yaml`.
 
 3. Inspect the results in the folder `testOut`. The output folder contains the information about the contract learn from each loop and the statistic information about the initial and final contract. The output file `logfile` contains the information about the invariants discovered in each iteration of the invariant synthesis loop. The output file `logtimefile` reports timing statistics about the verification process.
 
