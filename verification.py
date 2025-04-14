@@ -98,22 +98,7 @@ parser = Lark(expr_grammar, start='expr', ambiguity='resolve') # ambiguity='expl
 
 
 def selfCompositionObservationEquivalence(wireId, obsDict, prefix):
-    # condition = ""
-    # for obsId in obsDict.keys():
-    #     condition += "\t{}\n".format(selfCompositionEquivConstraint(obsId, obsDict[obsId], prefix))
-    # if len(obsDict.keys()) > 0:
-    #     if wireId == "src_equiv":
-    #         # filtered semantic
-    #         condition+="\twire {} = ( ! ( Retire_obs_trg_arg0_trg_right && Retire_obs_trg_arg0_trg_left ) ) || ( {} ) ;\n".format(wireId, " && ".join( ["{}_{}".format(obsId, prefix) for obsId in obsDict.keys() ] ))
-    #         # # non-filtered semantic
-    #         # condition+="\twire {} =  ( {} ) ;\n".format(wireId, " && ".join( ["{}_{}".format(obsId, prefix) for obsId in obsDict.keys() ] ))
-    #     else:
-    #         condition+="\twire {} = {} ;\n".format(wireId, " && ".join( ["{}_{}".format(obsId, prefix) for obsId in obsDict.keys() ] ))
-    # # if len(obsDict.keys()) > 0:
-    # #     condition+="\twire {} = {} ;\n".format(wireId, " && ".join( ["{}_{}".format(obsId, prefix) for obsId in obsDict.keys() ] ))
-    #     return condition
-    # else:
-    #     return ""
+
 
     condition = ""
     for obsId in obsDict.keys():
@@ -239,27 +224,7 @@ def selfCompositionInvsConstraint(obsId, observations, cstrType):
 
 
 def selfCompositionCycleDelayedCheck(clock, bound, delay, cstrType):
-    # verificationConditions = ""
-    # verificationConditions += "\t// auxiliary register for Bound and Counter\n"
-    # verificationConditions += f"\treg  [{ math.floor( math.log2(int(bound) + 1) ) + 1} : 0 ] bound = {bound};\n"
-    # verificationConditions += f"\treg  [{ math.floor( math.log2(int(bound) + 1) ) + 1} : 0 ] counter = {bound} - {delay};\n"
-    # verificationConditions += "\talways @ (posedge {}) begin\n".format(clock)
-    # verificationConditions += f"\t\tif (counter > 0) begin\n"
-    # verificationConditions += f"\t\t\tcounter <= counter - 1;\n"
-    # verificationConditions += "\t\tend\n"
-    # verificationConditions += f"\t\tif (bound > 0) begin\n"
-    # verificationConditions += f"\t\t\tbound <= bound - 1;\n"
-    # verificationConditions += "\t\tend\n"
-    # verificationConditions += "\tend\n"
-    # verificationConditions += "\t// update the states for verification\n"
-    # verificationConditions += f"\treg state_trg_equiv = 1;\n"
-    # # verificationConditions += f"\treg init_state_trg_equiv = 1;\n"
-    # verificationConditions += "\talways @ (posedge {}) begin\n".format(clock)
-    # verificationConditions += f"\t\tif (counter > 0) begin\n"
-    # verificationConditions += f"\t\t\tstate_trg_equiv <= state_trg_equiv && trg_equiv;\n"
-    # verificationConditions += "\t\tend\n"
-    # verificationConditions += "\tend\n\n"
-    # verificationConditions += "\twire fin_state_trg_equiv = ( bound > 0 ) ||  state_trg_equiv  ;\n"
+
     
     if CONF.propertyEncoding == "static":
         verificationConditions = ""
@@ -626,10 +591,7 @@ def expandMetaVariable(var: str, rng: int, dict_):
 
 def collectVars(expr):
     varsSet = set()
-    # if expr.startswith("\\") and expr.count("["):
-    #     print("xxxxxxxxxx",expr)
-    #     varsSet.add(expr)
-    # else:
+
     tree = parser.parse(expr)
     for varNode in tree.find_data("var"):
         ## construct varName

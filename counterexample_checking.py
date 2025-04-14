@@ -32,44 +32,6 @@ def runTestbed(testbed):
     cmd = [CONF.vvpPath, testbed]
     ctx = run_process(cmd, CONF.verbose_counterexample_checking)
     cycles = ctx.split(">>>>>")
-        
-    
-    # diffcycle = False
-    # name = ""
-    # instr_counter = 2 # the number of instructions looking forward
-    # ctr_list = []
-    # for cycle in cycles[1:-1]:
-    #     # print("cycle",cycle)
-    #     invs = cycle.split("\n")
-    #     trg_equiv = ((invs[1]).split(" "))[1]
-    #     Retire_trg = ((invs[2]).split(" "))[1]
-    #     Retire_left = ((invs[3]).split(" "))[1]
-    #     Retire_right = ((invs[3]).split(" "))[3]
-    #     print("trg_equiv",trg_equiv)
-    #     print("Retire_trg",Retire_trg)
-    #     print("Retire_left",Retire_left)
-    #     print("Retire_right",Retire_right)
-    #     if trg_equiv == "0":
-    #         diffcycle = True
-            
-    #     if diffcycle and Retire_left == "1" and Retire_right == "1":
-    #         print("cycle",cycle)
-    #         instr_counter = instr_counter - 1 
-    #         for inv in invs[4:-1]:
-    #             print("inv",inv)
-    #             tbname = inv.split(" ")
-    #             if (tbname[-1] == "0" or tbname[-1] == "x") and len(tbname) == 2:
-    #                 name = tbname[0].split("_src_cand")[0].split(".")[-1]
-    #                 print("name: ",name)
-    #                 if not ctr_list.count(name):
-    #                     ctr_list.append(name)
-    #                     break
-    #     if instr_counter == 0:
-    #         break
-    # print("ctr_list",ctr_list)      
-    # return ctr_list
-
-
 
     diffcycle = False
     name = ""
@@ -121,16 +83,7 @@ def isSpurious(counterexample,outFolder):
     cmd = ["mv", f"{outFolder}_tmp", f"{outFolder}/{outFolder}_tmp"]
     run_process(cmd, CONF.verbose_counterexample_checking)
 
-    # 1. preprocess counterexample
-        # 1.a write another prod.v using sources instead of targets and without assert/assume
-        # - for this, we can probably move the construction of product circuit to its own module
-        # - add back src/trg modules
-        # - do we need to construct and inline observations again? Yes, because
-        #   these are new observations!
-        # 1.c modify the counterexample testbed to add checks for trace
-        # equivalence + $display for output
 
-    # 2. collect all files 
     files = [file for file in os.listdir(outFolder) if file.endswith(".v")]
 
     # 3. compile testbed using iverilog
@@ -139,14 +92,6 @@ def isSpurious(counterexample,outFolder):
     # 4. run
     return runTestbed(testbed)
 
-    ### 
-    # iverilog -o dsn test.v counter.v
-    # vvp dsn
-    # To the code add something like 
-    # always @* begin
-    #    $display("%b",c);
-    # end
-    # to monitor changes to values
 
 
 def displayObservations(counterexample, obsDict, prodType, keyword):
@@ -310,10 +255,7 @@ def runCounterexample(counterexample, trgObservations, srcCandObeservations, fil
 
     time2 = datetime.now()
     logtimefile("\n\t\tTime for analyzing counterexample: "+ str((time2- time1).seconds) + "\n\n")
-    # logtimefile("\n\t\tTime for renaming prod: "+ str((time11- time1).seconds))
-    # logtimefile("\n\t\tTime for iverilog: "+ str((time12- time11).seconds))
-    # logtimefile("\n\t\tTime for VVP: "+ str((time13- time12).seconds))
-    # run_process(["rm", "{}/prod.v".format(outFolder)])
+
     log("END - RUN CTX")
     # exit(1)
     return updatedContractID

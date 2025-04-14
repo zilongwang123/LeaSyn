@@ -111,22 +111,6 @@ def expandArrays(folder, toExpand):
 
 
 
-# def initInstrMem(folder, instrMemFile, instrMemName, instrMemSize, instrMemWide, memSize):
-#     src = ""
-#     with open("{}/{}".format(folder, instrMemFile), "r") as f:
-#         src = f.read()
-
-#     if src.count("endmodule") > 1:
-#         print(f"There is more than one module declaration in {folder}/{instrMemFile}!")
-#         exit(1)
-
-
-#     expansion = "wire [9:0] shorten_mem_addr = sram_addr % {};".format(memSize)
-
-#     src = src.replace("wire [9:0] shorten_mem_addr ;", expansion)
-#     with open("{}/{}".format(folder,instrMemFile), "w") as f:
-#             f.write(src)
-
 
 
 
@@ -146,11 +130,7 @@ def preprocessing(to_expand, cstrtype):
         log(f"Expanding arrays in {CONF.module}")
         expandArrays(outFolder, to_expand)
 
-    # ## 2. init instruction arrays
-    # log(f"resize instruction memory in {CONF.module}")
-    # initInstrMem(outFolder, CONF.instrMemFile, CONF.instrMemName,CONF.instrMemSize, CONF.instrMemWide, memSize)
 
-    
 
 
 

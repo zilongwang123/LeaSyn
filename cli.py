@@ -25,68 +25,6 @@ from LeaVe.LeaVe import LeaVe
 # 1. better error handling :-\
 
 
-'''
-def microEquivCheck(srcObservations, invariant, stateInvariant, auxVars, metaVars, toexpandArray, filtertype):
-    counter = 1
-    basepass = False
-    starttime = time.time() 
-    while(invariant):
-        logfile("\nBegin the {}th loop...\n".format(counter))
-        logtimefile("\n\n\tTime for the {}th loop...".format(counter))
-        counter+=1
-        logfile("\tThe invariant for verification is:\n" + "".join(inv2str(invariant)))
-        if not basepass: 
-            # 1.1 verification_base
-            print("Checking the base case")
-            logfile("\n3.1. Checking the micro-equivalence relation...\n")
-            logfile("\n3.1.1. Checking the base case...\n")
-            verifStatus, cex, inv = verify(invariant, "base", filtertype)
-            print(verifStatus)
-
-            if verifStatus == "FAIL":
-                diffInvList = runCounterexample(cex, inv, "base", filtertype)
-                logfile("  The base step is not satisfied!\n" + "\tthe difference set of invariant is:\n------\n"+ "\n".join(diffInvList)+"\n------\n")
-                print("The base case is not satisfied!")
-                if diffInvList == []:
-                    logfile("  Nothing learned from counterexample! The result is UNKNOWN!")
-                    print("Nothing learned from counterexample!")
-                    return False, None
-                invariant = refineInvariant(invariant, diffInvList)
-                continue
-            else:
-                basepass = True
-                logfile("  The base case is satisfied!\n")
-                basetime = time.time()
-                continue
-        else:
-            # 1.2 verification_inductive
-            print("  Checking the inductive step")
-            logfile("\n\t Checking the inductive step...\n")
-            verifStatus, cex, inv = verify(invariant, "inductive", filtertype)
-            if verifStatus == "FAIL":
-                print("The inductive step is not satisfied!")
-                diffInvList = runCounterexample(cex, inv, "inductive", filtertype)
-                logfile("\tThe inductive step is not satisfied!\n" + "\tthe difference set of invariant is:\n------\n"+ "\n".join(diffInvList)+"\n------\n")
-                if diffInvList == []:
-                    print("Nothing learned from counterexample!")
-                    logfile("\tNothing learned from counterexample! The result is UNKNOWN!")
-                    return False, None
-                invariant = refineInvariant(invariant, diffInvList)
-                continue
-            else:
-                logfile("\tThe inductive step is satisfied!\n")
-                invtime = time.time()
-                logfile("\tThe invariant learned is:\n" + "".join(inv2str(invariant)))
-                print("The invariant learned is: \n",invariant)
-                
-                logfile("\n\n\tTime for base step: "+ str(int(basetime- starttime)))
-                logfile("\n\tTime for inductive step: "+ str(int(invtime - basetime)))
-                logtimefile("\n\n\tTime for base step: "+ str(int(basetime- starttime)))
-                logtimefile("\n\tTime for inductive step: "+ str(int(invtime - basetime)))
-                return True, invariant
-    logfile("  \n\t No invariant found!\n")
-    return False, None
-'''
 
 def updateCandidateContract(srcObservations, candidateContractAtoms, updatedContractID):
     updatedContract = srcObservations
@@ -245,46 +183,6 @@ def main():
 
     logtimefile("\n\tTime for inductively proving the secure with the contract: "+ str(int(time6- time5)))
     
-
-
-
-
-'''
-    # large-bound-check
-    auxVars, to_expand, invariant = initInvariant("delayedcheck")#invariant = CONF.invariant
-    # generating toexpandArray
-    toexpandArray = to_expand + CONF.expandArrays
-    # normal pipeline invariant
-    stateInvariant = CONF.stateInvariant
-    # source observations
-    srcObservations = CONF.srcObservations
-    # target observations
-    trgObservations = CONF.trgObservations + CONF.predicateRetire
-    # meta variables
-    metaVars = CONF.metaVars
-
-    time1 = time.time() 
-    logfile("\n2. Start the delayed leakage ordering check...\n")
-    logfile("\n\t2.1 Start the preprocessing...\n")
-    logtimefile("1. Start the preprocessing...\n")    
-    # print(invariant)
-    # exit(1)
-    preprocessing(toexpandArray, srcObservations, invariant, stateInvariant, auxVars, metaVars, "delayedcheck")
-    time2 = time.time() 
-    logtimefile("\n\n2. Start the verification...")
-    State, invariant = microEquivCheck(srcObservations, invariant, stateInvariant, auxVars, metaVars, toexpandArray, "delayedcheck")
-    if State:    
-        logfile("\n\n3. Check the satisfaction based on learned strongest attacker.\n")
-        if invariantSubset(invariant, CONF.trgObservations):
-            logfile("\n\tThe CPU is SECURE under the attack w.r.t the contract!!")
-        else:
-            logfile("\n\tThe CPU is VULNERABLE under the attack w.r.t the contract!!")
-    time3 = time.time()  
-    logtimefile("\n\n\tTime for preprocessing: "+ str(int(time2- time1)))
-    logtimefile("\n\tTime for learning the strongest attacker: "+ str(int(time3- time2)))
-'''
-
-
 
 
 
