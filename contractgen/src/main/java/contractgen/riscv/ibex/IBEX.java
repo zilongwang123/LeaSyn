@@ -43,19 +43,19 @@ IBEX extends MARCH {
     /**
      * The path where to find the template.
      */
-    private static final String TEMPLATE_PATH = "/home/yosys/resources/ibex/";
+    private static final String TEMPLATE_PATH = "/home/zilong.wang/bounded-leave/hwcontracts/code/verification/contractgen/src/main/resources/ibex/";
     /**
      * The path where to store the instantiated template.
      */
-    protected String BASE_PATH = "/home/yosys/output/ibex/generated/";
+    protected String BASE_PATH = "/home/zilong.wang/bounded-leave/hwcontracts/code/verification/contractgen/Template/ibex/generated/";
     /**
      * The path where the compiled module is to be stored.
      */
-    protected String COMPILATION_PATH = "/home/yosys/output/ibex/compiled/";
+    protected String COMPILATION_PATH = "/home/zilong.wang/bounded-leave/hwcontracts/code/verification/contractgen/Template/ibex/compiled/";
     /**
      * The path where simulation takes place.
      */
-    protected String SIMULATION_PATH = "/home/yosys/output/ibex/simulation/";
+    protected String SIMULATION_PATH = "/home/zilong.wang/bounded-leave/hwcontracts/code/verification/contractgen/Template/ibex/simulation/";
 
     private final VARIANT VARIANT;
 

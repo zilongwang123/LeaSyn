@@ -28,19 +28,19 @@ DARKRISCV_2 extends MARCH {
     /**
      * The path where to find the template.
      */
-    private static final String TEMPLATE_PATH = "/home/yosys/resources/darkriscv-2/";
+    private static final String TEMPLATE_PATH = "/home/zilong.wang/bounded-leave/hwcontracts/code/verification/contractgen/src/main/resources/darkriscv-2/";
     /**
      * The path where to store the instantiated template.
      */
-    protected String BASE_PATH = "/home/yosys/output/darkriscv-2/generated/";
+    protected String BASE_PATH = "/home/zilong.wang/bounded-leave/hwcontracts/code/verification/contractgen/Template/darkriscv-2/generated/";
     /**
      * The path where the compiled module is to be stored.
      */
-    protected String COMPILATION_PATH = "/home/yosys/output/darkriscv-2/compiled/";
+    protected String COMPILATION_PATH = "/home/zilong.wang/bounded-leave/hwcontracts/code/verification/contractgen/Template/darkriscv-2/compiled/";
     /**
      * The path where simulation takes place.
      */
-    protected String SIMULATION_PATH = "/home/yosys/output/darkriscv-2/simulation/";
+    protected String SIMULATION_PATH = "/home/zilong.wang/bounded-leave/hwcontracts/code/verification/contractgen/Template/darkriscv-2/simulation/";
 
     /**
      * @param updater   The updater to be used to update the contract.
