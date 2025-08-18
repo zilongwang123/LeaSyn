@@ -1,6 +1,28 @@
+# LeaSyn
+LeaSyn is a tool for synthesizing sound and precise Leakage contracts for open-source RISC-V processors. 
+
+For more details on Leasyn's synthesis approach, see our paper "Synthesis of Sound and Precise Leakage Contracts for Open-Source RISC-V Processors" at ACM CCS 2025  (open access [here](https://arxiv.org/abs/2305.06979)).
+
+For more details on unbounded verification, see our paper "Specification and Verification of Side-channel Security for Open-source Processors via Leakage Contracts" at CCS 2023 (open access [here](https://arxiv.org/abs/2305.06979)).
+
+For more details on leakage contracts, see our paper "Hardware-Software Contracts for Secure Speculation" at IEEE S&P 2021 (open access [here](https://arxiv.org/abs/2006.03841)).
+
+
 ## Compile the Yosys passes
 
-LeaSyn relies on three Yosys custom passes to prepare the processor design for verification. These passes need to be compiled before using LeaVe. Run `make -C yosys-passes` or follow the instructions in folder `yosys-passes` for more detailed instructions.
+LeaSyn relies on three Yosys custom passes to prepare the processor design for verification. These passes need to be compiled before using LeaSyn. Run `make -C yosys-passes` or follow the instructions in folder `yosys-passes` for more detailed instructions.
+
+
+## Dependencies
+
+To run LeaSyn, you need the following dependencies:
+
+1. Python, version 3.8.10 or higher
+2. yices 2.6.4
+3. Yosys, version 0.26+50 or higher
+4. Icarus Verilog version 12.0
+
+
 
 ## Reproducing the results from the paper
 
@@ -13,4 +35,5 @@ Below, `$TARGET` is one of  [`DarkRISCV-2`,`DarkRISCV-3`,`Sodor-2`,`ibex-small`,
 2. Run LeaSyn by executing `python3 cli.py config/$TARGET.yaml`.
 
 3. Inspect the results in the folder `testOut`. The output folder contains the information about the contract learn from each loop and the statistic information about the initial and final contract. The output file `logfile` contains the information about the invariants discovered in each iteration of the invariant synthesis loop. The output file `logtimefile` reports timing statistics about the verification process.
+
 
