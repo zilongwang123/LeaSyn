@@ -15,12 +15,12 @@ memoryList: ["AsyncScratchPadMemory_2stage.mem_0_0", "AsyncScratchPadMemory_2sta
 
 
 # Verilog frontend
-yosysPath: "../../../../yosys/yosys"
+yosysPath: "../yosys/yosys"
 yosysBMCPath: "yosys-smtbmc"
 inductiveyosysBMCBound: "2"
 checkyosysBMCBound: "5"
 prefixCheck: "True"
-yosysAdditionalModules: ["addobsmodule.so", "show_regs_mems.so", "stuttering.so"]
+yosysAdditionalModules: ["addmodule.so", "show_regs_mems.so", "stuttering.so"]
 
 
 # Output
