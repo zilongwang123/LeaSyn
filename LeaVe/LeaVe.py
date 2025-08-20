@@ -97,8 +97,8 @@ def LeaVe(srcObservations, configFile):
     if CONF.selfCompositionEquality == "===":
         CONF.selfCompositionInequality = "!=="
 
-    run_process(["rm", CONF.outFolder + "/../logfile"], CONF.verbose_preprocessing)
-    run_process(["rm", CONF.outFolder + "/../logtimefile"], CONF.verbose_preprocessing)
+    # run_process(["rm", CONF.outFolder + "/../logfile"], CONF.verbose_preprocessing)
+    # run_process(["rm", CONF.outFolder + "/../logtimefile"], CONF.verbose_preprocessing)
     logfile("1. Preparing the environment for verification....\n")
     run_process(["rm", "-rf", CONF.outFolder], CONF.verbose_preprocessing)
     run_process(["mkdir", CONF.outFolder], CONF.verbose_preprocessing)
