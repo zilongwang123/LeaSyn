@@ -220,7 +220,7 @@ auxiliaryVariables:
   - {id: "\\core0.IADDR", value: "\\core0.IADDR", width: 32}
   - {id: "ROM", width: 32768, value: "ROM_flat"}
   - {id: "RAM", width: 32768, value: "RAM_flat"}
-  - {id: "\\core0.REG1", width: 512, value: "\\core0.REG1_flat"}
+  # - {id: "\\core0.REG1", width: 512, value: "\\core0.REG1_flat"}
   # - {id: "\\core0.REG2", width: 512, value: "\\core0.REG2_flat"}
   - {id: "ROMFF", value: "ROMFF", width: 32}
   - {id: "RAMFF", value: "RAMFF", width: 32}

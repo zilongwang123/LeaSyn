@@ -211,7 +211,7 @@ expandArrays:
 #  - {filename: "darksocv_2stages.v", array: "\\core0.REG2", i: "32", j: "16", var: "\\core0.REG2_flat", flatten: "True", mult: "True"}
  - {filename: "darksocv_3stages.v", array: "ROM", i: "32", j: "1024", var: "ROM_flat", flatten: "True"}
  - {filename: "darksocv_3stages.v", array: "RAM", i: "32", j: "1024", var: "RAM_flat", flatten: "True"}
-#  - {filename: "core0.v", array: "REG1", start: "0", i: "32", j: "16", var: "REG1_flat", flatten: "True", mult: "True"}
+#  - {filename: "darkriscv_2stage.v", array: "REG1", start: "0", i: "32", j: "16", var: "REG1_flat", flatten: "True", mult: "True"}
 #  - {filename: "core0.v", array: "REG2", start: "0", i: "32", j: "16", var: "REG2_flat", flatten: "True", mult: "True"}
 
 auxiliaryVariables:
@@ -222,7 +222,7 @@ auxiliaryVariables:
   - {id: "\\core0.IADDR", value: "\\core0.IADDR", width: 32}
   - {id: "ROM", width: 32768, value: "ROM_flat"}
   - {id: "RAM", width: 32768, value: "RAM_flat"}
-  - {id: "\\core0.REG1", width: 512, value: "\\core0.REG1_flat"}
+  # - {id: "\\core0.REG1", width: 512, value: "\\core0.REG1_flat"}
   # - {id: "\\core0.REG2", width: 512, value: "\\core0.REG2_flat"}
   - {id: "ROMFF", value: "ROMFF", width: 32}
   - {id: "RAMFF", value: "RAMFF", width: 32}
