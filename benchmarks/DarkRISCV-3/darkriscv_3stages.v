@@ -1173,7 +1173,7 @@ REG2[DPTR] <= (XRES ? (RESMODE[4:0] == 2 ? 32'd0 : 0) : (HLT ? REG2[DPTR] : (!DP
   reg [4:0] old_rd_2 = 0;
   reg [4:0] old_rd_3 = 0;
   reg [4:0] old_rd_4 = 0;
-  always @(posedge clock) begin
+  always @(posedge CLK) begin
       if (retire == 1) begin
           old_rd_1 <= rd_1;
           old_rd_2 <= old_rd_1;
