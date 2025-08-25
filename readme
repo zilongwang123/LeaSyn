@@ -28,7 +28,7 @@ To run LeaSyn, you need the following dependencies:
 
 For each target, the instructions below describe how to synthesis a precise and sound contract.
 
-Below, `$TARGET` is one of  [`DarkRISCV-2`,`DarkRISCV-3`,`Sodor-2`,`ibex-small`,`ibex-mult-div`,`ibex-cache`]. To useSyn to synthesis a precise and sound contract for `$TARGET`, follow these steps:
+Below, `$TARGET` is one of  [`DarkRISCV-2`,`DarkRISCV-3`,`Sodor-2`,`ibex-small`,`ibex-mult-div`,`ibex-cache`]. To use LeaSyn to synthesis a precise and sound contract for `$TARGET`, follow these steps:
 
 1. In the configuration file `config/$TARGET.yaml`, change the value of the `yosysPath` option to point to the Yosys's executable in your machine, e.g., `yosys-root-path/yosys`. Change the parameters accordingly, e.g., the BMC bound, the strategy for encoding property...
 
