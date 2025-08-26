@@ -8,7 +8,7 @@ cycleDelayed: "39" # greater than 1
 instrDelayed: "1"
 testcase: "64000"
 evaTCs: "128000"
-ctr_families: "BASE,ALIGNED,BRANCH,VALUE,DEPENDENCIES" #BASE,ALIGNED,BRANCH,VALUE,DEPENDENCIES
+ctr_families: "BASE,ALIGNED,BRANCH,VALUE" #BASE,ALIGNED,BRANCH,VALUE
 propertyEncoding: "dynamic" #["static","dynamic"]
 
 processor: "IBEX_CACHE"
