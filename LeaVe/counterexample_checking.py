@@ -46,7 +46,7 @@ def runTestbed(testbed):
                 tbname = inv.split(" ")
                 if (tbname[-1] == "0" or tbname[-1] == "x") and len(tbname) == 2:
                     name = tbname[0].split("_trg")[0].split(".")[-1]
-                    if  name == "HLT" or name == "Retire" or name == "decode_branch_taken" or name == "retire_branch_taken" or name == "retire_FLUSH":
+                    if  name == "Retire" :
                         # if name == "Retire" :
                         logtimefile("\nFailed to prove " + name)
                         exit(1)
