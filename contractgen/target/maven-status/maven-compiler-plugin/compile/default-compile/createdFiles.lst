@@ -26,6 +26,7 @@ contractgen/riscv/isa/tests/RISCVTestIterator.class
 contractgen/riscv/isa/extractor/Sodor5Extractor$DEPENDENCY.class
 contractgen/Program.class
 contractgen/simple/march/pipeline/SimplePipelineMARCH.class
+contractgen/ILP.class
 contractgen/util/axi/AXI_B_CHAN.class
 contractgen/util/vcd/Module.class
 contractgen/util/FileUtils.class
