@@ -74,6 +74,26 @@ def contractgen (init, counter):
         cmd.append(f"-n{testcase}")
         cmd.append(f"-o")
         # cmd.append(f"CTR/current_ctr_{str(counter)}.json")
+        cmd.append(f"{folder}/CTR/current_ctr_noilp.json")
+        cmd.append(f"--txt")
+        cmd.append(f"{folder}/CTR/current_ctr_noilp.txt")
+        cmd.append(f"--skipILP")
+        run_process(cmd, CONF.verbose_verification)
+        return
+
+    elif init == "ilp":
+        testcase = CONF.testcase
+        processor = CONF.processor
+        threads = CONF.threads
+        folder = CONF.outFolder
+        cmd = ["java"]
+        cmd.append("-jar")
+        cmd.append(f"{path}target/contractgen-1.0-SNAPSHOT.jar")
+        cmd.append("ilp")
+        cmd.append(f"-r")
+        cmd.append(f"{folder}/CTR/current_ctr_noilp.json")
+        cmd.append(f"-o")
+        # cmd.append(f"CTR/current_ctr_{str(counter)}.json")
         cmd.append(f"{folder}/CTR/current_ctr.json")
         cmd.append(f"--txt")
         cmd.append(f"{folder}/CTR/current_ctr_{str(counter)}.txt")

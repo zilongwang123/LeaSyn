@@ -112,10 +112,18 @@ def main():
     compilecontractgen()
     time2 = time.time()
     # source observations
-    srcObservations, sizeOfContract = contractgen("init",0) # -s
+    contractgen("init",0) # -s
     # srcObservations = CONF.srcObservations
     # sizeOfContract = 3
     time3 = time.time()
+    
+    logtimefile("\n\n\tTime for generate the initial contract: "+ str(int(time3 - time2)))
+
+    srcObservations, sizeOfContract = contractgen("ilp",0) # -s
+
+    time3a = time.time()
+    logtimefile("\n\n\tTime for running ilp: "+ str(int(time3a - time3)))
+    logtimefile("\n\n")
 
     # candidate contract atoms
     candidateContractAtoms = CONF.candidateContractAtoms
