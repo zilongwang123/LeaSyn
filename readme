@@ -11,7 +11,7 @@ For more details on leakage contracts, see our paper "Hardware-Software Contract
 ## Compile the Yosys passes
 
 LeaSyn relies on three Yosys custom passes to prepare the processor design for verification. These passes need to be compiled before using LeaSyn. Run `make -C yosys-passes` or follow the instructions in folder `yosys-passes` for more detailed instructions.
-
+You will find 'addmodule.so', 'show_regs_mems.so' and 'stuttering.so' under the main folder.
 
 ## Dependencies
 
