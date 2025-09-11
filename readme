@@ -21,6 +21,8 @@ To run LeaSyn, you need the following dependencies:
 2. yices 2.6.4
 3. Yosys, version 0.26+50 or higher
 4. Icarus Verilog version 12.0
+5. openjdk 18.0.2
+6. sv2v
 
 
 
@@ -30,10 +32,11 @@ For each target, the instructions below describe how to synthesis a precise and 
 
 Below, `$TARGET` is one of  [`DarkRISCV-2`,`DarkRISCV-3`,`Sodor-2`,`ibex-small`,`ibex-mult-div`,`ibex-cache`]. To use LeaSyn to synthesis a precise and sound contract for `$TARGET`, follow these steps:
 
-1. In the configuration file `config/$TARGET.yaml`, change the value of the `yosysPath` option to point to the Yosys's executable in your machine, e.g., `yosys-root-path/yosys`. Change the parameters accordingly, e.g., the BMC bound, the strategy for encoding property, the contract templates...
+1. In the configuration file `config/$TARGET.yaml`, change the value of the `yosysPath` option to point to the Yosys's executable in your machine, e.g., `yosys-root-path/yosys`. Change the parameters accordingly, e.g., the BMC bound, the strategy for encoding property, the contract templates, the number of testcases for initial synthesis and evaluation...
 
 2. Run LeaSyn by executing `python3 cli.py config/$TARGET.yaml`.
 
-3. Inspect the results in the folder `testOut`. The output folder contains the information about the contract learn from each loop and the statistic information about the initial and final contract. The output file `logfile` contains the information about the invariants discovered in each iteration of the invariant synthesis loop. The output file `logtimefile` reports timing statistics about the verification process.
+3. Inspect the results of bounded verification in the folder `testOut`. The folder `CTR` contains the information about the contract learned from each loop and the statistic information about the initial and final contract. The output file `logfile` contains the information about the invariants discovered in each iteration of the invariant synthesis loop. The output file `logtimefile` reports timing statistics about the verification process.
 
+4. Similarly, inspect the results of unbounded verification in the folder `LeaVe/testOut`.
 
