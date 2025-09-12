@@ -34,9 +34,11 @@ Below, `$TARGET` is one of  [`DarkRISCV-2`,`DarkRISCV-3`,`Sodor-2`,`ibex-small`,
 
 1. In the configuration file `config/$TARGET.yaml`, change the value of the `yosysPath` option to point to the Yosys's executable in your machine, e.g., `yosys-root-path/yosys`. Change the parameters accordingly, e.g., the BMC bound, the strategy for encoding property, the contract templates, the number of testcases for initial synthesis and evaluation...
 
-2. Run LeaSyn by executing `python3 cli.py config/$TARGET.yaml`.
+2. Change 'TEMPLATE_PATH', 'TEMPLATE_PATH', 'COMPILATION_PATH' and 'SIMULATION_PATH' in 'contractgen/src/main/java/contractgen/riscv/sodor/$TARGET.java' accordingly.
 
-3. Inspect the results of bounded verification in the folder `testOut`. The folder `CTR` contains the information about the contract learned from each loop and the statistic information about the initial and final contract. The output file `logfile` contains the information about the invariants discovered in each iteration of the invariant synthesis loop. The output file `logtimefile` reports timing statistics about the verification process.
+3. Run LeaSyn by executing `python3 cli.py config/$TARGET.yaml`.
 
-4. Similarly, inspect the results of unbounded verification in the folder `LeaVe/testOut`.
+4. Inspect the results of bounded verification in the folder `testOut`. The folder `CTR` contains the information about the contract learned from each loop and the statistic information about the initial and final contract. The output file `logfile` contains the information about the invariants discovered in each iteration of the invariant synthesis loop. The output file `logtimefile` reports timing statistics about the verification process.
+
+5. Similarly, inspect the results of unbounded verification in the folder `LeaVe/testOut`.
 
