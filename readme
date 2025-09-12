@@ -32,9 +32,9 @@ For each target, the instructions below describe how to synthesis a precise and 
 
 Below, `$TARGET` is one of  [`darkriscv-2`,`darkriscv-3`,`sodor-2`,`ibex-small`,`ibex-mult-div`,`ibex-cache`]. To use LeaSyn to synthesis a precise and sound contract for `$TARGET`, follow these steps:
 
-1. In the configuration file `config/$TARGET.yaml`, change the value of the `yosysPath` option to point to the Yosys's executable in your machine, e.g., `yosys-root-path/yosys`. Change the parameters accordingly, e.g., the BMC bound, the strategy for encoding property, the contract templates, the number of testcases for initial synthesis and evaluation...
+1. In the configuration file `config/$TARGET.yaml` and `LeaVe/config/$TARGET.yaml`, change the value of the `yosysPath` option to point to the Yosys's executable in your machine, e.g., `yosys-root-path/yosys`. Change the parameters accordingly, e.g., the BMC bound, the strategy for encoding property, the contract templates, the number of testcases for initial synthesis and evaluation...
 
-2. If you use the docker container and put the LeaSyn under the path '/home/yosys', just skip this step. Otherwise, change the value of 'TEMPLATE_PATH', 'TEMPLATE_PATH', 'COMPILATION_PATH' and 'SIMULATION_PATH' in 'contractgen/src/main/java/contractgen/riscv/sodor/SODOR_2.java',  'contractgen/src/main/java/contractgen/riscv/ibex/IBEX.java', and 'contractgen/src/main/java/contractgen/riscv/darkriscv/DARKRISCV_3.java' accordingly.
+2. If you use the docker container and put the LeaSyn under the path `/home/yosys`, just skip this step. Otherwise, change the value of `TEMPLATE_PATH`, `TEMPLATE_PATH`, `COMPILATION_PATH` and `SIMULATION_PATH` in `contractgen/src/main/java/contractgen/riscv/sodor/SODOR_2.java`,  `contractgen/src/main/java/contractgen/riscv/ibex/IBEX.java`, and `contractgen/src/main/java/contractgen/riscv/darkriscv/DARKRISCV_3.java` accordingly.
 
 3. Run LeaSyn by executing `python3 cli.py config/$TARGET.yaml`.
 
