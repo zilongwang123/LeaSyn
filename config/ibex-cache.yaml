@@ -22,7 +22,7 @@ moduleFile: "ibex_top.v"
 memoryList: ["ibex_imem.imem","ibex_dmem.dmem"]
 
 # Verilog frontend
-yosysPath: "../tools/yosys/build/yosys"
+yosysPath: "yosys"
 yosysBMCPath: "yosys-smtbmc"
 BMCBound: "51"
 prefixCheck: "True"

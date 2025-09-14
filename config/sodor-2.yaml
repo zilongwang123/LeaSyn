@@ -22,7 +22,7 @@ moduleFile: "SodorInternalTile_2stage.v"
 memoryList: ["AsyncScratchPadMemory_2stage.mem_0_0", "AsyncScratchPadMemory_2stage.mem_1_0", "AsyncScratchPadMemory_2stage.mem_2_0", "AsyncScratchPadMemory_2stage.mem_3_0", "AsyncScratchPadMemory_2stage.mem_0_1", "AsyncScratchPadMemory_2stage.mem_1_1", "AsyncScratchPadMemory_2stage.mem_2_1", "AsyncScratchPadMemory_2stage.mem_3_1"]
 
 # Verilog frontend
-yosysPath: "../tools/yosys/build/yosys"
+yosysPath: "yosys"
 yosysBMCPath: "yosys-smtbmc"
 BMCBound: "6" 
 prefixCheck: "True"
