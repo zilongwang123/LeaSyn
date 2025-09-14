@@ -1,6 +1,6 @@
 This folder contains three Yosys custom passes for LeaVe.
 
-To build them with Yosys installed system wide, run `make`.
+If you use the provide Docker container, run `make`.
 
 To build with a custom Yosys installation, run `make YOSYS_CONFIG=<path-to-yosys-config>`
 with the path of `yosys-config` in the Yosys installation directory.
