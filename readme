@@ -1,7 +1,7 @@
 # LeaSyn
 LeaSyn is a tool for synthesizing sound and precise Leakage contracts for open-source RISC-V processors. 
 
-For more details on Leasyn's synthesis approach, see our paper "Synthesis of Sound and Precise Leakage Contracts for Open-Source RISC-V Processors" at ACM CCS 2025  (open access [here](https://arxiv.org/abs/2305.06979)).
+For more details on Leasyn's synthesis approach, see our paper "Synthesis of Sound and Precise Leakage Contracts for Open-Source RISC-V Processors" at ACM CCS 2025  (open access [here](https://arxiv.org/abs/2509.06509)).
 
 For more details on unbounded verification, see our paper "Specification and Verification of Side-channel Security for Open-source Processors via Leakage Contracts" at CCS 2023 (open access [here](https://arxiv.org/abs/2305.06979)).
 
