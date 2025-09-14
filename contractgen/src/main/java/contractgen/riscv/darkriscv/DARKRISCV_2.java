@@ -27,18 +27,22 @@ DARKRISCV_2 extends MARCH {
 
     /**
      * The path where to find the template.
+     * "path-to-leasyn/contractgen/src/main/resources/darkriscv-2/"
      */
     private static final String TEMPLATE_PATH = "/home/yosys/LeaSyn/contractgen/src/main/resources/darkriscv-2/";
     /**
      * The path where to store the instantiated template.
+     * "path-to-leasyn/contractgen/Template/darkriscv-2/generated/"
      */
     protected String BASE_PATH = "/home/yosys/LeaSyn/contractgen/Template/darkriscv-2/generated/";
     /**
      * The path where the compiled module is to be stored.
+     * "path-to-leasyn/contractgen/Template/darkriscv-2/compiled/"
      */
     protected String COMPILATION_PATH = "/home/yosys/LeaSyn/contractgen/Template/darkriscv-2/compiled/";
     /**
      * The path where simulation takes place.
+     * "path-to-leasyn/contractgen/Template/darkriscv-2/simulation/"
      */
     protected String SIMULATION_PATH = "/home/yosys/LeaSyn/contractgen/Template/darkriscv-2/simulation/";
 

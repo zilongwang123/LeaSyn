@@ -42,18 +42,22 @@ IBEX extends MARCH {
 
     /**
      * The path where to find the template.
+     * "path-to-leasyn/contractgen/src/main/resources/ibex/"
      */
     private static final String TEMPLATE_PATH = "/home/yosys/LeaSyn/contractgen/src/main/resources/ibex/";
     /**
      * The path where to store the instantiated template.
+     * "path-to-leasyn/contractgen/Template/ibex/generated/"
      */
     protected String BASE_PATH = "/home/yosys/LeaSyn/contractgen/Template/ibex/generated/";
     /**
      * The path where the compiled module is to be stored.
+     * "path-to-leasyn/contractgen/Template/ibex/compiled/"
      */
     protected String COMPILATION_PATH = "/home/yosys/LeaSyn/contractgen/Template/ibex/compiled/";
     /**
      * The path where simulation takes place.
+     * "path-to-leasyn/contractgen/Template/ibex/simulation/"
      */
     protected String SIMULATION_PATH = "/home/yosys/LeaSyn/contractgen/Template/ibex/simulation/";
 
