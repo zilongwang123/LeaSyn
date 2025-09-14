@@ -23,7 +23,7 @@ moduleFile: "darksocv_3stages.v"
 memoryList: ["RAM","ROM"]
 
 # Verilog frontend
-yosysPath: "../tools/yosys/build"
+yosysPath: "../tools/yosys/build/yosys"
 yosysBMCPath: "yosys-smtbmc"
 BMCBound: "20" # should be greater than cycleDelayed/47
 prefixCheck: "True"
