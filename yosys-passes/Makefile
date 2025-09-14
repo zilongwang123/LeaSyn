@@ -1,4 +1,6 @@
-YOSYS_CONFIG ?= yosys-config
+YOSYS_CONFIG ?= ../../tools/yosys/yosys-config
+CXXFLAGS=$(shell ../../tools/yosys/yosys-config --cxxflags)
+DATDIR=$(shell ../../tools/yosys/yosys-config --datdir)
 
 PASSES := addmodule stuttering show_regs_mems
 OBJS := $(patsubst %,../%.so,${PASSES})
@@ -10,5 +12,6 @@ clean:
 	rm -f ${OBJS}
 
 ../%.so: %.cc
-	${YOSYS_CONFIG} --build $@ $^
+	${YOSYS_CONFIG} --exec --cxx $(subst $(DATDIR),../../tools/yosys/share,$(CXXFLAGS)) --ldflags -o $@ -shared $^ --ldlibs
 	rm -f $(@:.so=.d)
+
