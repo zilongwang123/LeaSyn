@@ -6,8 +6,8 @@ clockInput: 'clock'
 initRegister: 'init'
 cycleDelayed: "1"
 instrDelayed: "1"
-testcase: "4000"
-evaTCs: "128000"
+testcase: "400"
+evaTCs: "2000"
 ctr_families: "BASE,ALIGNED,BRANCH,VALUE" #BASE,ALIGNED,BRANCH,VALUE
 propertyEncoding: "dynamic" #["static","dynamic"]
 
@@ -22,7 +22,7 @@ moduleFile: "SodorInternalTile_2stage.v"
 memoryList: ["AsyncScratchPadMemory_2stage.mem_0_0", "AsyncScratchPadMemory_2stage.mem_1_0", "AsyncScratchPadMemory_2stage.mem_2_0", "AsyncScratchPadMemory_2stage.mem_3_0", "AsyncScratchPadMemory_2stage.mem_0_1", "AsyncScratchPadMemory_2stage.mem_1_1", "AsyncScratchPadMemory_2stage.mem_2_1", "AsyncScratchPadMemory_2stage.mem_3_1"]
 
 # Verilog frontend
-yosysPath: "yosys"
+yosysPath: "../tools/yosys/build"
 yosysBMCPath: "yosys-smtbmc"
 BMCBound: "6" 
 prefixCheck: "True"
