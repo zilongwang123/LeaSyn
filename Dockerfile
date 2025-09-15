@@ -57,6 +57,10 @@ RUN make -j$(nproc)
 RUN make install
 WORKDIR /home/yosys/tools
 
+WORKDIR /home/yosys
+RUN git clone https://github.com/zilongwang123/LeaSyn.git
+WORKDIR /home/yosys/tools
+
 RUN DEBIAN_FRONTEND=noninteractive TZ=Europe/Berlin apt-get install -y python3-lark
 RUN mkdir /usr/local/share/yosys/plugins/
 
