@@ -43,7 +43,7 @@ Below, `$TARGET` is one of  [`darkriscv-2`,`darkriscv-3`,`sodor-2`,`ibex-small`,
 5. Similarly, inspect the results of unbounded verification in the folder `LeaVe/testOut`.
 
 
-## Using the docker
+## Using the Dockerfile (Strongly recommended)
 
 1. Construct the image using `Dockerfile` for running LeaSyn:
 ```
@@ -63,7 +63,7 @@ git pull
 make -C yosys-passes
 ```
 
-4. Reproducing the results by:
+4. Reproducing the results using:
 ```
 python3 cli.py config/$TARGET.yaml
 ```
