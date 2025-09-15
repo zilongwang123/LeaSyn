@@ -42,3 +42,28 @@ Below, `$TARGET` is one of  [`darkriscv-2`,`darkriscv-3`,`sodor-2`,`ibex-small`,
 
 5. Similarly, inspect the results of unbounded verification in the folder `LeaVe/testOut`.
 
+
+## Using the docker
+
+1. Construct the image using `Dockerfile` for running LeaSyn:
+```
+sudo docker build -t leasyn .
+```
+
+2. Run the docker container:
+```
+sudo docker run -t -i leasyn
+```
+
+3. In the container, under the path '/home/yosys', there are two folder: 1) `LeaSyn` contains the tool; 2) `tools` contains all the dependencies.
+Compile 3 yosys passes by running:
+```
+cd LeaSyn
+git pull
+make -C yosys-passes
+```
+
+4. Reproducing the results by:
+```
+python3 cli.py config/$TARGET.yaml
+```
