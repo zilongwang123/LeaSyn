@@ -67,3 +67,10 @@ make -C yosys-passes
 ```
 python3 cli.py config/$TARGET.yaml
 ```
+
+## Estimated running time
+There is no requirements on the platform to run LeaSyn. But it could run for a long time to terminate. 
+
+As a reference, our experiments ran on an AMD Ryzen Threadripper PRO 5995WX with 64 cores and 512 GB of RAM.
+The time for synthesizing a leakage contract and verifying bounded contract satisfaction (Correspoding to Phase 1 + Phase 2a + Phase 2b) ranges from 20 minutes to 5 hours. You can see “The CPU is bounded SECURE under the attack w.r.t the contract!” in logfile after termination.
+The time for verifying unbounded contract satisfaction (Correspoding to Phase 3) ranges from 3 hours to 43.5 hours. You can see "The CPU is SECURE under the attack w.r.t the contract!!" in logfile after termination.
