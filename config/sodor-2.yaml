@@ -6,8 +6,8 @@ clockInput: 'clock'
 initRegister: 'init'
 cycleDelayed: "1"
 instrDelayed: "1"
-testcase: "400"
-evaTCs: "2000"
+testcase: "2000"
+evaTCs: "20000"
 ctr_families: "BASE,ALIGNED,BRANCH,VALUE" #BASE,ALIGNED,BRANCH,VALUE
 propertyEncoding: "dynamic" #["static","dynamic"]
 
